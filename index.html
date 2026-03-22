@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tanmay Rawal — Edge AI & Neuroimaging Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080b0f; --surface: #0e1318; --border: #1c2530;
+    --accent: #00e5ff; --accent2: #ff6b35; --text: #d4dde8;
+    --muted: #5a6a7a; --heading: #f0f6ff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; line-height: 1.6; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 999; opacity: 0.4; }
+  body::after { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; z-index: 0; }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 0; background: rgba(8,11,15,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  nav .inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; position: relative; }
+  .hero-glow { position: absolute; top: 20%; right: -10%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%); pointer-events: none; }
+  .hero-glow2 { position: absolute; bottom: 10%; left: -5%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,107,53,0.05) 0%, transparent 70%); pointer-events: none; }
+
+  .tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--accent); border: 1px solid rgba(0,229,255,0.3); padding: 0.3rem 0.8rem; border-radius: 2px; margin-bottom: 1.5rem; letter-spacing: 0.1em; animation: fadeUp 0.6s ease both; }
+  h1 { font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 800; color: var(--heading); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.2rem; animation: fadeUp 0.6s 0.1s ease both; }
+  h1 span { color: var(--accent); }
+  .hero-sub { font-size: 1.05rem; color: var(--muted); max-width: 520px; margin-bottom: 2.5rem; line-height: 1.7; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.4rem; font-family: 'Space Mono', monospace; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; border-radius: 3px; transition: all 0.2s; }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 0 20px rgba(0,229,255,0.3); }
+  .btn-outline { border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .stats { padding: 3rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 4rem 0; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 800; color: var(--accent); display: block; font-family: 'Space Mono', monospace; }
+  .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.3rem; }
+
+  section { padding: 5rem 0; }
+  .section-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  h2 { font-size: 2rem; font-weight: 800; color: var(--heading); margin-bottom: 2.5rem; letter-spacing: -0.02em; }
+
+  .research-grid { display: grid; gap: 1.5rem; }
+  .research-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.8rem; position: relative; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+  .research-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); opacity: 0; transition: opacity 0.2s; }
+  .research-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-2px); }
+  .research-card:hover::before { opacity: 1; }
+  .card-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem; }
+  .card-title { font-size: 1.05rem; font-weight: 700; color: var(--heading); margin-bottom: 0.5rem; }
+  .card-body { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+  .badge { font-family: 'Space Mono', monospace; font-size: 0.65rem; padding: 0.25rem 0.6rem; border-radius: 2px; white-space: nowrap; flex-shrink: 0; }
+  .badge-published { background: rgba(0,229,255,0.1); color: var(--accent); border: 1px solid rgba(0,229,255,0.2); }
+  .badge-review { background: rgba(255,107,53,0.1); color: var(--accent2); border: 1px solid rgba(255,107,53,0.2); }
+  .badge-project { background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid var(--border); }
+  .metrics { display: flex; gap: 1.5rem; margin-top: 1.2rem; flex-wrap: wrap; align-items: center; }
+  .metric { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--accent); }
+  .metric span { color: var(--muted); }
+  .github-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); text-decoration: none; border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 2px; transition: all 0.2s; margin-top: 1rem; }
+  .github-link:hover { color: var(--accent); border-color: var(--accent); }
+  .github-link svg { width: 13px; height: 13px; fill: currentColor; }
+
+  /* LIVE GITHUB REPOS */
+  .repos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .repo-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.2rem 1.4rem; text-decoration: none; display: block; transition: all 0.2s; position: relative; overflow: hidden; }
+  .repo-card::after { content: '↗'; position: absolute; top: 1rem; right: 1rem; font-size: 1rem; color: var(--muted); transition: color 0.2s; }
+  .repo-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-2px); }
+  .repo-card:hover::after { color: var(--accent); }
+  .repo-name { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--accent); margin-bottom: 0.5rem; font-weight: 700; padding-right: 1.5rem; }
+  .repo-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-bottom: 0.8rem; min-height: 2.4rem; }
+  .repo-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .repo-lang { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--text); display: flex; align-items: center; gap: 0.3rem; }
+  .lang-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .repo-stars { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted); }
+  .repo-updated { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); }
+  .repos-loading { text-align: center; padding: 3rem; font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--muted); }
+  .repos-loading .dot { animation: blink 1.2s infinite; display: inline-block; }
+  .repos-loading .dot:nth-child(2) { animation-delay: 0.2s; }
+  .repos-loading .dot:nth-child(3) { animation-delay: 0.4s; }
+  .repos-error { text-align: center; padding: 2rem; font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--muted); }
+  .repos-error a { color: var(--accent); text-decoration: none; }
+
+  /* LANG COLORS */
+  .lang-Python { background: #3572A5; }
+  .lang-Jupyter\ Notebook { background: #DA5B0B; }
+  .lang-HTML { background: #e34c26; }
+  .lang-VHDL { background: #adb2c3; }
+  .lang-C { background: #555555; }
+  .lang-C\+\+ { background: #f34b7d; }
+  .lang-default { background: var(--muted); }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+  .skill-group { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.4rem; }
+  .skill-group-title { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag { font-size: 0.78rem; background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 0.25rem 0.6rem; border-radius: 2px; color: var(--text); }
+
+  .ach-list { display: grid; gap: 1rem; }
+  .ach-item { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.2rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.2s; }
+  .ach-item:hover { border-color: rgba(0,229,255,0.2); }
+  .ach-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .ach-title { font-weight: 700; color: var(--heading); font-size: 0.92rem; margin-bottom: 0.2rem; }
+  .ach-desc { font-size: 0.82rem; color: var(--muted); }
+
+  footer { padding: 3rem 0; border-top: 1px solid var(--border); text-align: center; }
+  .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+  .footer-links a { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-note { font-size: 0.75rem; color: var(--muted); font-family: 'Space Mono', monospace; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes blink { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .cursor { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; mix-blend-mode: screen; }
+
+  @media (max-width: 640px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .skills-grid { grid-template-columns: 1fr; }
+    .repos-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    h1 { font-size: 2.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <div class="inner">
+    <span class="nav-logo">TR // RESEARCHER</span>
+    <ul class="nav-links">
+      <li><a href="#research">Research</a></li>
+      <li><a href="#github">GitHub</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="mailto:23DEC511@lnmiit.ac.in">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="tag">// ECE Dual Degree · LNMIIT Jaipur · Rank 1</div>
+    <h1>Tanmay<br><span>Rawal</span></h1>
+    <p class="hero-sub">Building clinically deployable AI systems for neuroimaging — from CNN ensembles on medical datasets to INT8-quantized models running live on FPGA hardware. Edge AI meets neuroscience.</p>
+    <div class="hero-links">
+      <a href="https://linkedin.com/in/tanmay-rawal-10b0a7278" target="_blank" class="btn btn-primary">LinkedIn ↗</a>
+      <a href="https://github.com/TanmayRawal" target="_blank" class="btn btn-outline">GitHub ↗</a>
+      <a href="mailto:23DEC511@lnmiit.ac.in" class="btn btn-outline">Email ↗</a>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="stats reveal">
+    <div class="stats-grid">
+      <div class="stat-item"><span class="stat-num">98.8%</span><div class="stat-label">Brain Tumor Accuracy</div></div>
+      <div class="stat-item"><span class="stat-num">7.7×</span><div class="stat-label">FPGA Inference Speedup</div></div>
+      <div class="stat-item"><span class="stat-num">54th</span><div class="stat-label">Nokia FPGA Hackathon</div></div>
+      <div class="stat-item"><span class="stat-num" id="repo-count">—</span><div class="stat-label">Public Repositories</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="research">
+  <div class="container">
+    <p class="section-label reveal">// Research & Projects</p>
+    <h2 class="reveal">Published Work</h2>
+    <div class="research-grid">
+
+      <div class="research-card reveal">
+        <div class="card-meta">
+          <div><div class="card-title">INSIGHT-BRAIN: Interpretable Neural Systems for Brain Tumor Imaging</div></div>
+          <span class="badge badge-published">Published</span>
+        </div>
+        <p class="card-body">Human-centered XAI framework — InceptionV3+Grad-CAM, Xception+LIME, EfficientNetB0+SHAP — benchmarked against fidelity, stability, and consistency criteria for clinical trust. 98.8% ensemble accuracy over 7,421 MRI scans.</p>
+        <div class="metrics">
+          <div class="metric">IHCIC 2025 <span>· Human Centered AI Track</span></div>
+        </div>
+        <a href="https://github.com/TanmayRawal" target="_blank" class="github-link">
+          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="research-card reveal">
+        <div class="card-meta">
+          <div><div class="card-title">Hardware-Aware Quantization & FPGA Deployment for Explainable Tumor Detection</div></div>
+          <span class="badge badge-review">Under Review</span>
+        </div>
+        <p class="card-body">INT8 quantization via Vitis AI (Docker), .xmodel conversion, PYNQ-ZU FPGA deployment. Accuracy within 0.3% of FP32 — real-time edge inference, no cloud dependency.</p>
+        <div class="metrics">
+          <div class="metric">ISVLSI 2026 <span>· IEEE CS Symposium on VLSI</span></div>
+        </div>
+      </div>
+
+      <div class="research-card reveal">
+        <div class="card-meta">
+          <div><div class="card-title">Alzheimer's MRI Classification — Hardware-Accelerated CNN</div></div>
+          <span class="badge badge-project">Project</span>
+        </div>
+        <p class="card-body">ResNet50 for multi-class Alzheimer's staging on PYNQ-ZU (Zynq UltraScale+) via Vitis AI. 7.7× speedup, 75% compression, 32% power reduction at 91.14% accuracy retention.</p>
+        <div class="metrics">
+          <div class="metric">325ms → 42ms <span>latency</span></div>
+          <div class="metric">13.8MB → 3.5MB <span>model</span></div>
+        </div>
+        <a href="https://github.com/TanmayRawal" target="_blank" class="github-link">
+          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="research-card reveal">
+        <div class="card-meta">
+          <div><div class="card-title">RAG Knowledge Assistant with MCP Integration</div></div>
+          <span class="badge badge-published">Deployed</span>
+        </div>
+        <p class="card-body">PyMuPDF → Sentence Transformers → FAISS → Groq LLaMA 3.3 70B. Deployed as MCP server via FastMCP — Claude Desktop can call the knowledge base as a live tool. Streamlit frontend with per-chunk attribution.</p>
+        <div class="metrics">
+          <div class="metric">Streamlit Cloud <span>· live</span></div>
+          <div class="metric">FastMCP <span>· agentic</span></div>
+        </div>
+        <a href="https://github.com/TanmayRawal/rag-mcp-server" target="_blank" class="github-link">
+          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          rag-mcp-server ↗
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LIVE GITHUB SECTION -->
+<section id="github">
+  <div class="container">
+    <p class="section-label reveal">// Live from GitHub API</p>
+    <h2 class="reveal">All Repositories</h2>
+    <div id="repos-container">
+      <div class="repos-loading">Fetching from GitHub<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <p class="section-label reveal">// Technical Skills</p>
+    <h2 class="reveal">Stack</h2>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <div class="skill-group-title">ML & AI</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Deep Learning</span><span class="skill-tag">Transfer Learning</span><span class="skill-tag">Computer Vision</span><span class="skill-tag">Explainable AI</span><span class="skill-tag">RAG</span><span class="skill-tag">Model Quantization</span><span class="skill-tag">MLOps</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Edge AI & Hardware</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Vitis AI</span><span class="skill-tag">FPGA Deployment</span><span class="skill-tag">PYNQ-ZU</span><span class="skill-tag">VHDL</span><span class="skill-tag">Xilinx Vivado</span><span class="skill-tag">INT8 Quantization</span><span class="skill-tag">Docker</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Frameworks</div>
+        <div class="skill-tags">
+          <span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span><span class="skill-tag">OpenCV</span><span class="skill-tag">CUDA</span><span class="skill-tag">HuggingFace</span><span class="skill-tag">FAISS</span><span class="skill-tag">Streamlit</span><span class="skill-tag">ONNX</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">LLM & NLP</div>
+        <div class="skill-tags">
+          <span class="skill-tag">LLaMA</span><span class="skill-tag">Groq</span><span class="skill-tag">Sentence Transformers</span><span class="skill-tag">Vector Search</span><span class="skill-tag">FastMCP</span><span class="skill-tag">MCP Tool-Use</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="container">
+    <p class="section-label reveal">// Recognition</p>
+    <h2 class="reveal">Achievements</h2>
+    <div class="ach-list">
+      <div class="ach-item reveal">
+        <div class="ach-icon">🏆</div>
+        <div>
+          <div class="ach-title">Nokia FPGA Hackathon — Rank 54 / 1,200+ Teams Globally</div>
+          <div class="ach-desc">Top 100 finalist in FPGA-accelerated AI system design. Competed against graduate and professional teams worldwide.</div>
+        </div>
+      </div>
+      <div class="ach-item reveal">
+        <div class="ach-icon">📄</div>
+        <div>
+          <div class="ach-title">First Author — IHCIC 2025 (Published)</div>
+          <div class="ach-desc">INSIGHT-BRAIN published at the 17th International Conference on Intelligent Human-Computer Interaction, Track: Human Centered AI, Paper ID 277.</div>
+        </div>
+      </div>
+      <div class="ach-item reveal">
+        <div class="ach-icon">📄</div>
+        <div>
+          <div class="ach-title">Co-Author — ISVLSI 2026 (Under Review)</div>
+          <div class="ach-desc">Hardware-aware quantization and FPGA deployment paper submitted to IEEE Computer Society Annual Symposium on VLSI 2026, Paper No. 107.</div>
+        </div>
+      </div>
+      <div class="ach-item reveal">
+        <div class="ach-icon">🎓</div>
+        <div>
+          <div class="ach-title">Rank 1 — Dual Degree Cohort, LNMIIT Jaipur</div>
+          <div class="ach-desc">Top of cohort in B.Tech-M.Tech Integrated Dual Degree, Electronics and Communication Engineering.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="https://linkedin.com/in/tanmay-rawal-10b0a7278" target="_blank">LinkedIn</a>
+      <a href="https://github.com/TanmayRawal" target="_blank">GitHub</a>
+      <a href="mailto:23DEC511@lnmiit.ac.in">23DEC511@lnmiit.ac.in</a>
+      <a href="tel:8287523527">+91 82875 23527</a>
+    </div>
+    <p class="footer-note">Tanmay Rawal · LNMIIT Jaipur · ECE Dual Degree · 2023–2028</p>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 3 + 'px';
+    cursor.style.top = e.clientY - 3 + 'px';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Language color map
+  const langColors = {
+    'Python': '#3572A5',
+    'Jupyter Notebook': '#DA5B0B',
+    'HTML': '#e34c26',
+    'VHDL': '#adb2c3',
+    'C': '#555555',
+    'C++': '#f34b7d',
+    'JavaScript': '#f1e05a',
+    'Shell': '#89e051',
+  };
+
+  function getLangColor(lang) {
+    return langColors[lang] || '#5a6a7a';
+  }
+
+  function timeAgo(dateStr) {
+    const diff = Date.now() - new Date(dateStr);
+    const days = Math.floor(diff / 86400000);
+    if (days < 1) return 'today';
+    if (days === 1) return '1d ago';
+    if (days < 30) return days + 'd ago';
+    if (days < 365) return Math.floor(days/30) + 'mo ago';
+    return Math.floor(days/365) + 'y ago';
+  }
+
+  // Fetch GitHub repos
+  async function fetchRepos() {
+    const container = document.getElementById('repos-container');
+    try {
+      const res = await fetch('https://api.github.com/users/TanmayRawal/repos?sort=updated&per_page=100');
+      if (!res.ok) throw new Error('GitHub API error');
+      const repos = await res.json();
+
+      // Update stat
+      const publicRepos = repos.filter(r => !r.fork);
+      document.getElementById('repo-count').textContent = publicRepos.length;
+
+      if (publicRepos.length === 0) {
+        container.innerHTML = '<div class="repos-error">No public repositories found. <a href="https://github.com/TanmayRawal" target="_blank">View on GitHub ↗</a></div>';
+        return;
+      }
+
+      const grid = document.createElement('div');
+      grid.className = 'repos-grid';
+
+      publicRepos.forEach((repo, i) => {
+        const card = document.createElement('a');
+        card.href = repo.html_url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.className = 'repo-card reveal';
+        card.style.animationDelay = (i * 50) + 'ms';
+
+        const langDot = repo.language
+          ? `<span class="lang-dot" style="background:${getLangColor(repo.language)}"></span>${repo.language}`
+          : '';
+
+        card.innerHTML = `
+          <div class="repo-name">${repo.name}</div>
+          <div class="repo-desc">${repo.description || 'No description provided.'}</div>
+          <div class="repo-meta">
+            ${repo.language ? `<div class="repo-lang"><span class="lang-dot" style="background:${getLangColor(repo.language)}"></span>${repo.language}</div>` : ''}
+            ${repo.stargazers_count > 0 ? `<div class="repo-stars">★ ${repo.stargazers_count}</div>` : ''}
+            <div class="repo-updated">${timeAgo(repo.updated_at)}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      container.innerHTML = '';
+      container.appendChild(grid);
+
+      // Re-observe new cards
+      grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    } catch (err) {
+      container.innerHTML = `<div class="repos-error">Could not load repositories automatically. <a href="https://github.com/TanmayRawal" target="_blank">View all on GitHub ↗</a></div>`;
+      document.getElementById('repo-count').textContent = '—';
+    }
+  }
+
+  fetchRepos();
+</script>
+</body>
+</html>

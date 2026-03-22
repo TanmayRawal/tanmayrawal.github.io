@@ -228,7 +228,8 @@ footer{padding:2.5rem 2.5rem;display:flex;justify-content:space-between;align-it
 .h-btns{animation:fadeUp 0.7s 1.05s both}
 
 /* REVEAL */
-.rv{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.rv{opacity:1;transform:none;transition:opacity 0.6s ease,transform 0.6s ease}
+.rv.pre-anim{opacity:0;transform:translateY(20px)}
 .rv.in{opacity:1;transform:none}
 
 /* MOBILE */
@@ -287,11 +288,11 @@ footer{padding:2.5rem 2.5rem;display:flex;justify-content:space-between;align-it
 
     <!-- ANIMATED STAT PILLS -->
     <div class="stat-pills">
-      <div class="pill"><span class="pv" data-target="98.8">0</span><span class="pk">% Brain Tumor Accuracy</span></div>
-      <div class="pill"><span class="pv" style="color:var(--gr)" data-target="7.7">0</span><span class="pk">× FPGA Speedup</span></div>
+      <div class="pill"><span class="pv" data-target="98.8">98.8</span><span class="pk">% Brain Tumor Accuracy</span></div>
+      <div class="pill"><span class="pv" style="color:var(--gr)" data-target="7.7">7.7</span><span class="pk">× FPGA Speedup</span></div>
       <div class="pill"><span class="pv" style="color:var(--or)">54<sup style="font-size:0.6em">th</sup></span><span class="pk">Nokia FPGA Hackathon</span></div>
       <div class="pill"><span class="pv" style="color:var(--yl)">0.3</span><span class="pk">% INT8 Accuracy Drop</span></div>
-      <div class="pill"><span class="pv" id="rpill" style="color:var(--txt)">—</span><span class="pk">Public Repos</span></div>
+      <div class="pill"><span class="pv" id="rpill" style="color:var(--txt)">6</span><span class="pk">Public Repos</span></div>
     </div>
 
     <div class="h-btns">
@@ -535,7 +536,11 @@ const tk=document.getElementById('tk');
 const obs=new IntersectionObserver(es=>{
   es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);obs.unobserve(e.target)}});
 },{threshold:0.08});
-document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+// Only add animation if JS runs - content visible by default
+document.querySelectorAll('.rv').forEach(el=>{
+  el.classList.add('pre-anim');
+  obs.observe(el);
+});
 
 /* ANIMATED COUNTERS */
 function countUp(el,target,duration=1500,suffix=''){
@@ -560,28 +565,52 @@ const pillObs=new IntersectionObserver(es=>{
 },{threshold:0.3});
 document.querySelector('.stat-pills')&&pillObs.observe(document.querySelector('.stat-pills'));
 
+
 /* GITHUB */
 const LC={'Python':'#3572A5','Jupyter Notebook':'#DA5B0B','HTML':'#e34c26','VHDL':'#adb2c3','C':'#555','C++':'#f34b7d','JavaScript':'#f1e05a','Shell':'#89e051'};
 const lc=l=>LC[l]||'#3a5568';
 const ago=d=>{const days=Math.floor((Date.now()-new Date(d))/86400000);if(days<1)return'today';if(days===1)return'1d ago';if(days<30)return days+'d ago';if(days<365)return Math.floor(days/30)+'mo ago';return Math.floor(days/365)+'y ago'};
-(async()=>{
+
+const fallbackRepos=[
+  {name:'Brain-Tumor-MRI-Classification',html_url:'https://github.com/TanmayRawal/Brain-Tumor-MRI-Classification-Using-Ensemble-CNN-XAI-and-Hardware-Accelerated-Edge-Deployment',description:'CNN ensemble + XAI + FPGA edge deployment for brain tumor MRI. Published at IHCIC 2025.',language:'Jupyter Notebook',stargazers_count:1,updated_at:new Date(Date.now()-12*86400000).toISOString()},
+  {name:'Alzheimer-Classification-FPGA',html_url:'https://github.com/TanmayRawal/Alzheimer-Classification-Using-Hardware-Accelerated-CNN-on-PYNQ-ZU-FPGA-with-Arm-Processor',description:'ResNet50 Alzheimer staging on PYNQ-ZU FPGA via Vitis AI. 7.7x speedup, 75% compression.',language:'Jupyter Notebook',stargazers_count:1,updated_at:new Date(Date.now()-19*86400000).toISOString()},
+  {name:'rag-mcp-server',html_url:'https://github.com/TanmayRawal/rag-mcp-server',description:'RAG pipeline as MCP server — Claude Desktop calls it as a live agentic tool.',language:'Jupyter Notebook',stargazers_count:1,updated_at:new Date(Date.now()-5*86400000).toISOString()},
+  {name:'house-price-prediction',html_url:'https://github.com/TanmayRawal/house-price-prediction',description:'Linear + Logistic Regression for house price prediction. R2=0.649, 81.6% accuracy.',language:'Jupyter Notebook',stargazers_count:0,updated_at:new Date(Date.now()-5*86400000).toISOString()},
+  {name:'tanmayrawal.github.io',html_url:'https://github.com/TanmayRawal/tanmayrawal.github.io',description:'Personal portfolio — Edge AI x Agentic AI x Neuroimaging.',language:'HTML',stargazers_count:0,updated_at:new Date(Date.now()-86400000).toISOString()},
+  {name:'TanmayRawal',html_url:'https://github.com/TanmayRawal/TanmayRawal',description:'GitHub profile README.',language:null,stargazers_count:0,updated_at:new Date().toISOString()},
+];
+
+function renderRepos(repos){
   const wrap=document.getElementById('repos-wrap');
+  if(!wrap)return;
+  const g=document.createElement('div');
+  g.id='repos-grid';
+  repos.forEach(repo=>{
+    const a=document.createElement('a');
+    a.href=repo.html_url;a.target='_blank';a.rel='noopener noreferrer';a.className='repo';
+    a.innerHTML='<div class="rn">'+repo.name+'</div><div class="rd">'+(repo.description||'No description.')+'</div><div class="rm">'+(repo.language?'<div class="rlg"><span class="ld" style="background:'+lc(repo.language)+'"></span>'+repo.language+'</div>':'')+(repo.stargazers_count>0?'<div class="rs">★ '+repo.stargazers_count+'</div>':'')+'<div class="rtime">'+ago(repo.updated_at)+'</div></div>';
+    g.appendChild(a);
+  });
+  wrap.innerHTML='';wrap.appendChild(g);
+}
+
+renderRepos(fallbackRepos);
+
+(async()=>{
   try{
     const r=await fetch('https://api.github.com/users/TanmayRawal/repos?sort=updated&per_page=100');
-    if(!r.ok)throw 0;
+    if(!r.ok)throw new Error('API error');
     const repos=await r.json();
     const pub=repos.filter(r=>!r.fork);
-    const rp=document.getElementById('rpill');
-    if(rp)rp.textContent=pub.length;
-    if(!pub.length){wrap.innerHTML='<div class="repos-loading">No public repos. <a href="https://github.com/TanmayRawal" target="_blank" style="color:var(--cx)">GitHub ↗</a></div>';return}
-    const g=document.createElement('div');g.id='repos-grid';
-    pub.forEach(repo=>{
-      const a=document.createElement('a');
-      a.href=repo.html_url;a.target='_blank';a.rel='noopener noreferrer';a.className='repo rv';
-      a.innerHTML=`<div class="rn">${repo.name}</div><div class="rd">${repo.description||'No description.'}</div><div class="rm">${repo.language?`<div class="rlg"><span class="ld" style="background:${lc(repo.language)}"></span>${repo.language}</div>`:''} ${repo.stargazers_count>0?`<div class="rs">★ ${repo.stargazers_count}</div>`:''}<div class="rtime">${ago(repo.updated_at)}</div></div>`;
-      g.appendChild(a);
-    });
-    wrap.innerHTML='';wrap.appendChild(g);
-    g.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+    if(pub.length>0){
+      const rp=document.getElementById('rpill');
+      if(rp)rp.textContent=pub.length;
+      renderRepos(pub);
+    }
   }catch(e){
-    wrap
+    console.log('Using fallback repos - API unavailable');
+  }
+})();
+</script>
+</body>
+</html>

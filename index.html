@@ -116,9 +116,10 @@ section{padding:100px 40px}
 .exp-badge{display:inline-flex;margin-top:12px;font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:var(--teal-lt);color:var(--teal);border:1px solid rgba(10,107,98,.2)}
 .exp-role{font-family:var(--ff-display);font-size:1.3rem;font-weight:700;color:var(--ink);margin-bottom:5px;letter-spacing:-.022em}
 .exp-subtitle{font-size:.82rem;color:var(--ink-2);margin-bottom:18px}
-.exp-bullets{display:flex;flex-direction:column;gap:10px}
-.exp-bullet{display:flex;gap:12px;align-items:flex-start;font-size:.86rem;color:var(--ink-2);line-height:1.65}
-.exp-bullet::before{content:'→';color:var(--signal);font-size:.72rem;margin-top:4px;flex-shrink:0}
+.exp-bullets{display:flex;flex-direction:column;gap:12px}
+.exp-bullet{display:flex;gap:10px;align-items:baseline;font-size:.875rem;color:var(--ink-2);line-height:1.74}
+.exp-bullet-arrow{color:var(--signal);font-size:.72rem;flex-shrink:0;padding-top:1px}
+.exp-bullet span:last-child{display:inline;flex:1}
 .exp-bullet strong{color:var(--ink);font-weight:600}
 .exp-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
 .exp-chip{font-family:var(--ff-mono);font-size:.6rem;padding:3px 9px;border-radius:4px;background:var(--paper);color:var(--ink-2);border:1px solid var(--border)}
@@ -363,10 +364,10 @@ footer span{color:rgba(255,255,255,.48)}
         <div class="exp-role">Brain Tumor MRI Classification</div>
         <div class="exp-subtitle">Under Dr. Kusum Lata · HOD ECE · PhD IISc Bangalore</div>
         <div class="exp-bullets">
-          <div class="exp-bullet">Built a <strong>weighted ensemble</strong> of EfficientNetB0, InceptionV3 & Xception over 7,421 MRI scans — <strong>98.8% test accuracy</strong>, outperforming all single-model baselines by 2–4%.</div>
-          <div class="exp-bullet">Benchmarked <strong>Grad-CAM, LIME & SHAP</strong> against fidelity, stability & consistency — quantitative XAI validation designed for clinical trustworthiness.</div>
-          <div class="exp-bullet"><strong>INT8-quantized via Vitis AI</strong> (Docker), compiled for DPUCZDX8G DPU, deployed on PYNQ-ZU FPGA — <strong>0.3% accuracy loss vs FP32</strong>; real-time edge inference with zero GPU or cloud dependency.</div>
-          <div class="exp-bullet">Work published at <strong>IHCI 2025</strong>; FPGA deployment extension under review at <strong>IEEE ISVLSI 2026</strong>.</div>
+          <div class="exp-bullet"><span class="exp-bullet-arrow">→</span><span>Built a <strong>weighted ensemble</strong> of EfficientNetB0, InceptionV3 &amp; Xception over 7,421 MRI scans — <strong>98.8% test accuracy</strong>, outperforming all single-model baselines by 2–4%.</span></div>
+          <div class="exp-bullet"><span class="exp-bullet-arrow">→</span><span>Benchmarked <strong>Grad-CAM, LIME &amp; SHAP</strong> against fidelity, stability &amp; consistency — quantitative XAI validation designed for clinical trustworthiness.</span></div>
+          <div class="exp-bullet"><span class="exp-bullet-arrow">→</span><span><strong>INT8-quantized via Vitis AI</strong> (Docker), compiled for DPUCZDX8G DPU, deployed on PYNQ-ZU FPGA — <strong>0.3% accuracy loss vs FP32</strong>; real-time edge inference with zero GPU or cloud dependency.</span></div>
+          <div class="exp-bullet"><span class="exp-bullet-arrow">→</span><span>Work published at <strong>IHCI 2025</strong>; FPGA deployment extension under review at <strong>IEEE ISVLSI 2026</strong>.</span></div>
         </div>
         <div class="exp-chips">
           <span class="exp-chip">PyTorch</span><span class="exp-chip">TensorFlow</span><span class="exp-chip">Vitis AI</span><span class="exp-chip">PYNQ-ZU</span><span class="exp-chip">DPUCZDX8G</span><span class="exp-chip">Docker</span><span class="exp-chip">Grad-CAM</span><span class="exp-chip">LIME</span><span class="exp-chip">SHAP</span><span class="exp-chip">INT8 PTQ</span><span class="exp-chip">ONNX</span>
@@ -410,7 +411,7 @@ footer span{color:rgba(255,255,255,.48)}
           <div class="paper-chips">
             <span class="pchip hi">98.8% Accuracy</span><span class="pchip hi">0.3% Quant Loss</span><span class="pchip tl">PYNQ-ZU Deployed</span>
             <span class="pchip">EfficientNetB0 · InceptionV3 · Xception</span><span class="pchip">Grad-CAM · LIME · SHAP</span><span class="pchip">Vitis AI · INT8</span>
-          </div>
+          </p></div>
         </div>
       </div>
 
@@ -423,7 +424,7 @@ footer span{color:rgba(255,255,255,.48)}
           <div class="paper-chips">
             <span class="pchip hi">Under Review · IEEE</span><span class="pchip tl">Live PYNQ-ZU Demo</span>
             <span class="pchip">Zynq UltraScale+</span><span class="pchip">DPUCZDX8G ISA1 B4096</span><span class="pchip">INT8 · ONNX → DPU</span>
-          </div>
+          </p></div>
         </div>
       </div>
 
@@ -436,7 +437,7 @@ footer span{color:rgba(255,255,255,.48)}
           <div class="paper-chips">
             <span class="pchip hi">96.42% Accuracy</span><span class="pchip hi">98.4 FPS</span><span class="pchip hi">13.9× CPU Speedup</span><span class="pchip tl">AUC 0.9970</span>
             <span class="pchip">ResNet50 · Focal Loss</span><span class="pchip">9,488 MRI Scans</span><span class="pchip">OASIS + Falah</span>
-          </div>
+          </p></div>
         </div>
       </div>
 
@@ -454,13 +455,13 @@ footer span{color:rgba(255,255,255,.48)}
       <div class="proj-card reveal d1">
         <div class="proj-top">
           <div class="proj-icon" style="background:#E3F4F2">🔬</div>
-          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 pub">IHCI 2025</span></div><a href="https://github.com/TanmayRawal/Brain-Tumor-MRI-Classification-Using-Ensemble-CNN-XAI-and-Hardware-Accelerated-Edge-Deployment" target="_blank" class="proj-gh">↗</a></div>
+          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 pub">IHCI 2025</span></div><a href="https://github.com/TanmayRawal/Brain-Tumor-MRI-Classification-Using-Ensemble-CNN-XAI-and-Hardware-Accelerated-Edge-Deployment" target="_blank" class="proj-gh">↗</a></p></div>
         </div>
         <div class="proj-name">Brain Tumor Ensemble + XAI</div>
         <p class="proj-desc">Weighted CNN ensemble over 7,421 MRI scans. Quantitative XAI benchmark with Grad-CAM, LIME & SHAP. Published at IHCI 2025.</p>
         <div class="proj-metrics">
           <div class="p-metric"><div class="pm-dot" style="background:#16A34A"></div>98.8% Acc</div>
-          <div class="p-metric"><div class="pm-dot" style="background:var(--teal)"></div>XAI × 3 methods</div>
+          <div class="p-metric"><div class="pm-dot" style="background:var(--teal)"></div>XAI × 3 methods</p></div>
         </div>
         <div class="proj-stack"><span class="p-stack">EfficientNetB0</span><span class="p-stack">InceptionV3</span><span class="p-stack">Xception</span><span class="p-stack">TensorFlow</span><span class="p-stack">SHAP</span></div>
       </div>
@@ -468,13 +469,13 @@ footer span{color:rgba(255,255,255,.48)}
       <div class="proj-card reveal d2">
         <div class="proj-top">
           <div class="proj-icon" style="background:#FFF1EB">⚡</div>
-          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 rev">ISVLSI 2026</span></div><a href="https://github.com/TanmayRawal/Brain-Tumor-MRI-Classification-Using-Ensemble-CNN-XAI-and-Hardware-Accelerated-Edge-Deployment" target="_blank" class="proj-gh">↗</a></div>
+          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 rev">ISVLSI 2026</span></div><a href="https://github.com/TanmayRawal/Brain-Tumor-MRI-Classification-Using-Ensemble-CNN-XAI-and-Hardware-Accelerated-Edge-Deployment" target="_blank" class="proj-gh">↗</a></p></div>
         </div>
         <div class="proj-name">Brain Tumor — FPGA Edge Deploy</div>
         <p class="proj-desc">Full FPGA pipeline of the IHCI ensemble. INT8 → DPU compilation, live inference on PYNQ-ZU Zynq UltraScale+. Under review at IEEE ISVLSI.</p>
         <div class="proj-metrics">
           <div class="p-metric"><div class="pm-dot" style="background:#16A34A"></div>PYNQ-ZU Live</div>
-          <div class="p-metric"><div class="pm-dot" style="background:#2563EB"></div>INT8 DPU</div>
+          <div class="p-metric"><div class="pm-dot" style="background:#2563EB"></div>INT8 DPU</p></div>
         </div>
         <div class="proj-stack"><span class="p-stack">Vitis AI</span><span class="p-stack">DPUCZDX8G</span><span class="p-stack">ONNX</span><span class="p-stack">OpenCV</span></div>
       </div>
@@ -482,14 +483,14 @@ footer span{color:rgba(255,255,255,.48)}
       <div class="proj-card reveal d3">
         <div class="proj-top">
           <div class="proj-icon" style="background:#F0F9FF">🧠</div>
-          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 rev">IEEE TENCON</span></div><a href="https://github.com/TanmayRawal/Alzheimer-Classification-Using-Hardware-Accelerated-CNN-on-PYNQ-ZU-FPGA-with-Arm-Processor" target="_blank" class="proj-gh">↗</a></div>
+          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 rev">IEEE TENCON</span></div><a href="https://github.com/TanmayRawal/Alzheimer-Classification-Using-Hardware-Accelerated-CNN-on-PYNQ-ZU-FPGA-with-Arm-Processor" target="_blank" class="proj-gh">↗</a></p></div>
         </div>
         <div class="proj-name">Alzheimer's Staging — DPU on PYNQ-ZU</div>
         <p class="proj-desc">ResNet50 + Focal Loss on 9,488 MRI scans. 98.4 FPS, 13.9× CPU speedup, zero fallback. Live webcam staging on ARM Cortex-A53.</p>
         <div class="proj-metrics">
           <div class="p-metric"><div class="pm-dot" style="background:#16A34A"></div>96.42% Acc</div>
           <div class="p-metric"><div class="pm-dot" style="background:#2563EB"></div>98.4 FPS</div>
-          <div class="p-metric"><div class="pm-dot" style="background:var(--signal)"></div>13.9×</div>
+          <div class="p-metric"><div class="pm-dot" style="background:var(--signal)"></div>13.9×</p></div>
         </div>
         <div class="proj-stack"><span class="p-stack">ResNet50</span><span class="p-stack">Focal Loss</span><span class="p-stack">Vitis AI</span><span class="p-stack">PYNQ-ZU</span></div>
       </div>
@@ -497,13 +498,13 @@ footer span{color:rgba(255,255,255,.48)}
       <div class="proj-card reveal d1">
         <div class="proj-top">
           <div class="proj-icon" style="background:#EEF2FF">🤖</div>
-          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 live">Production</span></div><a href="https://github.com/TanmayRawal/ResolveAI" target="_blank" class="proj-gh">↗</a></div>
+          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 live">Production</span></div><a href="https://github.com/TanmayRawal/ResolveAI" target="_blank" class="proj-gh">↗</a></p></div>
         </div>
         <div class="proj-name">ResolveAI — 4-Agent RAG Pipeline</div>
         <p class="proj-desc">Production agentic system: intent routing → FAISS retrieval → LLM synthesis → PII-audited escalation. Exposed as MCP server via FastMCP — Claude Desktop invokes it as a live external tool.</p>
         <div class="proj-metrics">
           <div class="p-metric"><div class="pm-dot" style="background:#2563EB"></div>4 Agents</div>
-          <div class="p-metric"><div class="pm-dot" style="background:#16A34A"></div>MCP Integrated</div>
+          <div class="p-metric"><div class="pm-dot" style="background:#16A34A"></div>MCP Integrated</p></div>
         </div>
         <div class="proj-stack"><span class="p-stack">CrewAI</span><span class="p-stack">Gemini</span><span class="p-stack">FAISS</span><span class="p-stack">LangChain</span><span class="p-stack">FastMCP</span></div>
       </div>
@@ -511,13 +512,13 @@ footer span{color:rgba(255,255,255,.48)}
       <div class="proj-card reveal d2">
         <div class="proj-top">
           <div class="proj-icon" style="background:#F0FDF4">⚙️</div>
-          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 live">Cloud Deploy</span></div><a href="https://github.com/TanmayRawal/rag-mcp-server" target="_blank" class="proj-gh">↗</a></div>
+          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 live">Cloud Deploy</span></div><a href="https://github.com/TanmayRawal/rag-mcp-server" target="_blank" class="proj-gh">↗</a></p></div>
         </div>
         <div class="proj-name">RAG-MCP Server — Agentic Backend</div>
         <p class="proj-desc">MCP server exposing FAISS semantic search as a live tool for LLM agents. Groq LLaMA 3.3-70B + Sentence Transformers + PyMuPDF. Deployed on Streamlit Cloud.</p>
         <div class="proj-metrics">
           <div class="p-metric"><div class="pm-dot" style="background:#16A34A"></div>Live Cloud</div>
-          <div class="p-metric"><div class="pm-dot" style="background:#2563EB"></div>MCP Protocol</div>
+          <div class="p-metric"><div class="pm-dot" style="background:#2563EB"></div>MCP Protocol</p></div>
         </div>
         <div class="proj-stack"><span class="p-stack">FastMCP</span><span class="p-stack">LLaMA 3.3-70B</span><span class="p-stack">FAISS</span><span class="p-stack">Streamlit</span></div>
       </div>
@@ -525,13 +526,13 @@ footer span{color:rgba(255,255,255,.48)}
       <div class="proj-card reveal d3">
         <div class="proj-top">
           <div class="proj-icon" style="background:#FFF7ED">🔐</div>
-          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 rtl">RTL</span></div><a href="https://github.com/TanmayRawal/AES128-hardware-accelerator" target="_blank" class="proj-gh">↗</a></div>
+          <div class="proj-right"><div class="proj-badges"><span class="pbadge2 rtl">RTL</span></div><a href="https://github.com/TanmayRawal/AES128-hardware-accelerator" target="_blank" class="proj-gh">↗</a></p></div>
         </div>
         <div class="proj-name">AES-128 Hardware Accelerator</div>
         <p class="proj-desc">12-cycle AES-128 engine in Verilog on Nexys 4 DDR. AXI4-Lite SoC interface for IP integration, JTAG-based verification pipeline. Full timing closure in Vivado.</p>
         <div class="proj-metrics">
           <div class="p-metric"><div class="pm-dot" style="background:var(--signal)"></div>12-Cycle Core</div>
-          <div class="p-metric"><div class="pm-dot" style="background:#2563EB"></div>AXI4-Lite</div>
+          <div class="p-metric"><div class="pm-dot" style="background:#2563EB"></div>AXI4-Lite</p></div>
         </div>
         <div class="proj-stack"><span class="p-stack">Verilog</span><span class="p-stack">Vivado</span><span class="p-stack">AXI4-Lite</span><span class="p-stack">JTAG</span></div>
       </div>

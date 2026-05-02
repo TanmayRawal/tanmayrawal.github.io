@@ -1,616 +1,1432 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tanmay Rawal — Edge AI & Neuroimaging</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#04080c;
-  --s1:#070d14;
-  --s2:#0a1420;
-  --b1:#0f1f2e;
-  --b2:#162840;
-  --cx:#00d4ff;
-  --or:#ff5a1f;
-  --gr:#00ff88;
-  --yl:#ffe44d;
-  --txt:#c0d4e4;
-  --mt:#3a5568;
-  --hd:#f0f8ff;
-  --FD:'Bebas Neue',sans-serif;
-  --FM:'JetBrains Mono',monospace;
-  --FB:'DM Sans',sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--txt);font-family:var(--FB);overflow-x:hidden;cursor:none}
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-thumb{background:var(--cx)}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tanmay Rawal — Edge AI & Hardware Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── VARIABLES ─── */
+    :root {
+      --bg: #FDFCF8;
+      --bg-card: #FFFFFF;
+      --bg-alt: #F4F1EA;
+      --text: #1A1816;
+      --text-secondary: #6B6560;
+      --text-muted: #A09A94;
+      --accent: #C2410C;
+      --accent-light: #FFF1EB;
+      --teal: #0F766E;
+      --teal-light: #E6F7F5;
+      --border: #E5E0D5;
+      --border-light: #F0EDE6;
+      --shadow-sm: 0 1px 3px rgba(26,24,22,0.06), 0 1px 2px rgba(26,24,22,0.04);
+      --shadow: 0 4px 16px rgba(26,24,22,0.08), 0 2px 6px rgba(26,24,22,0.05);
+      --shadow-lg: 0 12px 40px rgba(26,24,22,0.12), 0 4px 12px rgba(26,24,22,0.06);
+      --radius: 12px;
+      --radius-sm: 6px;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --max-width: 1100px;
+      --nav-height: 64px;
+    }
 
-/* CURSOR */
-#c1,#c2{position:fixed;border-radius:50%;pointer-events:none;z-index:9000;top:0;left:0}
-#c1{width:8px;height:8px;background:var(--cx);margin:-4px 0 0 -4px;transition:transform 0.08s}
-#c2{width:36px;height:36px;border:1px solid rgba(0,212,255,0.4);margin:-18px 0 0 -18px;transition:all 0.15s ease}
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
 
-/* PROGRESS BAR */
-#prog{position:fixed;top:0;left:0;height:2px;z-index:500;width:0%;background:linear-gradient(90deg,var(--cx),var(--or),var(--gr));transition:width 0.08s}
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-alt); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 2.5rem;height:54px;display:flex;align-items:center;justify-content:space-between;background:rgba(4,8,12,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,212,255,0.08)}
-.nlogo{font-family:var(--FM);font-size:0.72rem;color:var(--cx);letter-spacing:0.1em;display:flex;align-items:center;gap:0.4rem}
-.ncaret{color:var(--or);animation:blink 1s infinite}
-.nlinks{display:flex;gap:2rem}
-.nlinks a{font-family:var(--FM);font-size:0.65rem;color:var(--mt);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s}
-.nlinks a:hover{color:var(--cx)}
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-height);
+      background: rgba(253,252,248,0.88);
+      backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid var(--border-light);
+      display: flex; align-items: center;
+    }
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; right: 0; height: 1.5px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      background: var(--text);
+      color: var(--bg) !important;
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-weight: 500 !important;
+      letter-spacing: 0 !important;
+      text-transform: none !important;
+      font-size: 0.85rem !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--accent) !important; transform: translateY(-1px); }
 
-/* ═══ HERO ═══ */
-.hero{min-height:100vh;display:flex;align-items:center;padding-top:54px;position:relative;overflow:hidden}
+    /* ─── SECTIONS ─── */
+    section { padding: 100px 32px; }
+    .container { max-width: var(--max-width); margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .section-header { margin-bottom: 56px; }
 
-/* ANIMATED GRADIENT MESH */
-.mesh{position:absolute;inset:0;z-index:0;overflow:hidden}
-.mesh-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.18;animation:float linear infinite}
-.mb1{width:600px;height:600px;background:radial-gradient(circle,var(--cx),transparent 70%);top:-10%;right:-10%;animation-duration:20s}
-.mb2{width:400px;height:400px;background:radial-gradient(circle,var(--or),transparent 70%);bottom:5%;left:-5%;animation-duration:15s;animation-direction:reverse}
-.mb3{width:300px;height:300px;background:radial-gradient(circle,var(--gr),transparent 70%);top:40%;right:30%;animation-duration:25s}
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      padding-top: calc(var(--nav-height) + 80px);
+      padding-bottom: 80px;
+      display: flex; align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(194,65,12,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 20% 80%, rgba(15,118,110,0.05) 0%, transparent 70%),
+        linear-gradient(180deg, var(--bg-alt) 0%, var(--bg) 30%);
+      z-index: 0;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(var(--border-light) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-light) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%);
+      opacity: 0.5;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: var(--max-width); margin: 0 auto; width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 80px;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-light);
+      border: 1px solid rgba(194,65,12,0.15);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 0.6s 0.1s ease forwards;
+    }
+    .hero-eyebrow .dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 7vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--text);
+      margin-bottom: 20px;
+      opacity: 0; animation: fadeUp 0.7s 0.2s ease forwards;
+    }
+    .hero-name .accent-line {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--accent);
+    }
+    .hero-roles {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.7s 0.35s ease forwards;
+    }
+    .role-chip {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      background: var(--bg-card);
+    }
+    .role-chip.teal { border-color: rgba(15,118,110,0.3); color: var(--teal); background: var(--teal-light); }
+    .role-chip.orange { border-color: rgba(194,65,12,0.3); color: var(--accent); background: var(--accent-light); }
+    .hero-desc {
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin-bottom: 40px;
+      opacity: 0; animation: fadeUp 0.7s 0.45s ease forwards;
+    }
+    .hero-desc strong { color: var(--text); font-weight: 600; }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.7s 0.55s ease forwards;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(194,65,12,0.25); }
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--text); transform: translateY(-2px); box-shadow: var(--shadow); }
+    .btn-icon {
+      width: 16px; height: 16px;
+      fill: currentColor;
+    }
 
-/* GRID OVERLAY */
-.grid-bg{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.04) 1px,transparent 1px);background-size:50px 50px}
+    /* Hero Right Panel */
+    .hero-panel {
+      opacity: 0; animation: fadeLeft 0.8s 0.4s ease forwards;
+    }
+    .hero-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .hero-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+    }
+    .stat-cell {
+      background: var(--bg-card);
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-num .accent { color: var(--accent); }
+    .stat-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-icon { color: var(--accent); font-size: 0.9rem; flex-shrink: 0; }
+    .info-val { font-weight: 500; color: var(--text); }
 
-.hero-inner{max-width:1200px;margin:0 auto;padding:0 2.5rem;position:relative;z-index:2;width:100%}
+    /* ─── ABOUT ─── */
+    #about { background: var(--bg-alt); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 1.02rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .about-text p strong { color: var(--text); font-weight: 600; }
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 5px 11px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+    .about-aside { display: flex; flex-direction: column; gap: 16px; }
+    .aside-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .aside-card-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .advisor-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .advisor-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), #0EA5E9);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: white;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .advisor-name { font-weight: 600; font-size: 0.92rem; margin-bottom: 3px; }
+    .advisor-role { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+    .rank-display {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .rank-num {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .rank-context { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; }
+    .rank-detail { font-weight: 600; color: var(--text); font-size: 0.88rem; }
 
-.h-chip{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);padding:0.4rem 1rem;border-radius:100px;font-family:var(--FM);font-size:0.62rem;color:var(--cx);letter-spacing:0.1em;margin-bottom:1.8rem}
-.h-chip .pulse{width:6px;height:6px;border-radius:50%;background:var(--gr);animation:pulse 1.5s infinite}
+    /* ─── RESEARCH ─── */
+    #research { background: var(--bg); }
+    .pub-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 28px;
+      align-items: start;
+      transition: box-shadow 0.25s, transform 0.25s;
+      margin-bottom: 20px;
+    }
+    .pub-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .pub-year-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      padding: 8px 0;
+      border-right: 2px solid var(--border);
+      padding-right: 16px;
+    }
+    .pub-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .pub-status.published { background: rgba(15,118,110,0.1); color: var(--teal); }
+    .pub-status.review { background: rgba(194,65,12,0.1); color: var(--accent); }
+    .pub-status .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    .pub-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .pub-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px; }
+    .pub-meta span { margin: 0 6px; }
+    .pub-meta span:first-child { margin-left: 0; }
+    .pub-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
+    .pub-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 3px 9px;
+      border-radius: 4px;
+      background: var(--bg-alt);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-light);
+    }
+    .chip.teal { background: var(--teal-light); color: var(--teal); border-color: rgba(15,118,110,0.2); }
+    .chip.orange { background: var(--accent-light); color: var(--accent); border-color: rgba(194,65,12,0.2); }
 
-/* BIG NAME */
-.name-block{margin-bottom:1rem;line-height:0.85}
-.n1{font-family:var(--FD);font-size:clamp(5rem,13vw,12rem);color:var(--hd);letter-spacing:0.03em;display:block}
-.n2{font-family:var(--FD);font-size:clamp(5rem,13vw,12rem);letter-spacing:0.03em;display:block;
-  color:transparent;
-  background:linear-gradient(135deg,var(--cx) 0%,var(--gr) 50%,var(--cx) 100%);
-  background-size:200%;
-  -webkit-background-clip:text;background-clip:text;
-  animation:shimmer 4s linear infinite}
+    /* ─── PROJECTS ─── */
+    #projects { background: var(--bg-alt); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 22px;
+    }
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); border-color: transparent; }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .project-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .project-links { display: flex; gap: 8px; }
+    .project-link {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      transition: all 0.2s;
+    }
+    .project-link:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .project-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    .project-desc { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.65; }
+    .project-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .metric {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .metric-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+    }
+    .metric-dot.green { background: #16A34A; }
+    .metric-dot.blue { background: #2563EB; }
+    .metric-dot.orange { background: var(--accent); }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+    .stack-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--bg-alt);
+      color: var(--text-muted);
+      border: 1px solid var(--border-light);
+    }
+    .project-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(15,118,110,0.1);
+      color: var(--teal);
+    }
+    .project-badge.orange { background: rgba(194,65,12,0.1); color: var(--accent); }
+    .project-badge.blue { background: rgba(37,99,235,0.1); color: #2563EB; }
 
-.h-role{font-family:var(--FM);font-size:0.78rem;color:var(--mt);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:2rem;border-left:2px solid var(--cx);padding-left:1rem}
+    /* ─── SKILLS ─── */
+    #skills { background: var(--bg); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 22px;
+    }
+    .skill-category {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .skill-cat-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .skill-cat-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .skill-cat-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .skill-list { display: flex; flex-direction: column; gap: 10px; }
+    .skill-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .skill-name { font-size: 0.82rem; color: var(--text-secondary); }
+    .skill-bar { flex: 1; height: 4px; background: var(--bg-alt); border-radius: 2px; overflow: hidden; }
+    .skill-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .skill-fill.animated { width: var(--w); }
 
-.h-desc{max-width:560px;font-size:1.02rem;color:var(--txt);line-height:1.85;margin-bottom:3rem;font-weight:300}
-.h-desc strong{color:var(--hd);font-weight:600}
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--text);
+      color: var(--bg);
+      padding: 100px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    #contact::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(194,65,12,0.15) 0%, transparent 70%);
+    }
+    #contact::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: 20%;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15,118,110,0.15) 0%, transparent 70%);
+    }
+    .contact-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      align-items: center;
+    }
+    .contact-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(253,252,248,0.4);
+      margin-bottom: 16px;
+    }
+    .contact-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--bg);
+      margin-bottom: 20px;
+    }
+    .contact-title .accent { color: var(--accent); }
+    .contact-body {
+      font-size: 1rem;
+      color: rgba(253,252,248,0.65);
+      line-height: 1.7;
+      max-width: 440px;
+      margin-bottom: 32px;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 14px; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(253,252,248,0.12);
+      color: var(--bg);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .contact-link:hover { background: rgba(253,252,248,0.08); border-color: rgba(253,252,248,0.25); transform: translateX(4px); }
+    .contact-link-icon { font-size: 1rem; width: 20px; text-align: center; }
+    .contact-link-label { color: rgba(253,252,248,0.4); font-size: 0.72rem; margin-top: 1px; }
 
-/* STAT PILLS */
-.stat-pills{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem}
-.pill{background:rgba(255,255,255,0.03);border:1px solid var(--b2);padding:0.5rem 1.2rem;border-radius:2px;display:flex;flex-direction:column;gap:0.15rem;transition:all 0.2s}
-.pill:hover{border-color:var(--cx);background:rgba(0,212,255,0.05);transform:translateY(-2px)}
-.pv{font-family:var(--FD);font-size:1.6rem;color:var(--cx);line-height:1}
-.pk{font-family:var(--FM);font-size:0.58rem;color:var(--mt);letter-spacing:0.08em;text-transform:uppercase}
+    /* ─── FOOTER ─── */
+    footer {
+      background: #111009;
+      padding: 24px 32px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: rgba(253,252,248,0.3);
+    }
+    footer span { color: rgba(253,252,248,0.6); }
 
-.h-btns{display:flex;gap:0.8rem;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.6rem;font-family:var(--FM);font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:all 0.22s;position:relative;overflow:hidden}
-.btn-a{background:linear-gradient(135deg,var(--cx),var(--gr));color:#000}
-.btn-a:hover{box-shadow:0 0 30px rgba(0,212,255,0.4),0 0 60px rgba(0,255,136,0.15);transform:translateY(-2px)}
-.btn-b{border:1px solid var(--b2);color:var(--txt);background:transparent}
-.btn-b:hover{border-color:var(--cx);color:var(--cx);background:rgba(0,212,255,0.05);transform:translateY(-2px)}
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(24px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
 
-/* SCROLL INDICATOR */
-.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;z-index:2}
-.scroll-hint span{font-family:var(--FM);font-size:0.6rem;color:var(--mt);letter-spacing:0.15em;text-transform:uppercase}
-.scroll-line{width:1px;height:40px;background:linear-gradient(var(--cx),transparent);animation:scrollDown 2s ease-in-out infinite}
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      section { padding: 72px 20px; }
+      .nav-inner { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-panel { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+    }
 
-/* ═══ TICKER ═══ */
-.ticker{border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);overflow:hidden;background:var(--s1);padding:0;height:38px;display:flex;align-items:center}
-.track{display:flex;gap:0;animation:tick 30s linear infinite;white-space:nowrap;width:max-content;height:100%;align-items:center}
-.ti{font-family:var(--FM);font-size:0.62rem;color:var(--mt);padding:0 2rem;display:flex;align-items:center;gap:0.6rem;height:100%;border-right:1px solid var(--b1)}
-.ti .val{color:var(--cx);font-weight:700}
-.ti .sep{color:var(--or)}
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      border-radius: 1px;
+      margin: 24px 0;
+    }
 
-/* ═══ SECTIONS ═══ */
-.sec{padding:7rem 0}
-.w{max-width:1200px;margin:0 auto;padding:0 2.5rem}
-
-.ey{font-family:var(--FM);font-size:0.6rem;color:var(--cx);letter-spacing:0.25em;text-transform:uppercase;display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem}
-.ey::before{content:'▸';color:var(--or);font-size:0.5rem}
-
-h2{font-family:var(--FD);font-size:clamp(3rem,6vw,5rem);color:var(--hd);margin-bottom:3.5rem;letter-spacing:0.02em;line-height:1}
-
-/* ═══ RESEARCH ═══ */
-/* Two cols, then two cols */
-.rg{display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:var(--b1)}
-
-.rc{background:var(--bg);padding:2.5rem;position:relative;overflow:hidden;transition:background 0.3s}
-.rc:hover{background:var(--s1)}
-
-/* Top accent bar with color per card */
-.rc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:opacity 0.3s}
-.rc.pub::before{background:linear-gradient(90deg,var(--gr),transparent);opacity:0}
-.rc.rev::before{background:linear-gradient(90deg,var(--or),transparent);opacity:0}
-.rc.prj::before{background:linear-gradient(90deg,var(--cx),transparent);opacity:0}
-.rc.liv::before{background:linear-gradient(90deg,var(--yl),transparent);opacity:0}
-.rc:hover::before{opacity:1}
-
-.rc-num{font-family:var(--FD);font-size:5rem;color:var(--b1);position:absolute;top:-0.5rem;right:1.5rem;line-height:1;pointer-events:none;transition:color 0.3s}
-.rc:hover .rc-num{color:var(--b2)}
-
-.rc-badge{display:inline-flex;align-items:center;gap:0.4rem;font-family:var(--FM);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:1px;margin-bottom:1rem}
-.bp{background:rgba(0,255,136,0.08);color:var(--gr);border:1px solid rgba(0,255,136,0.2)}
-.bp::before{content:'●';font-size:0.4rem;animation:pulse 1.5s infinite}
-.br{background:rgba(255,90,31,0.08);color:var(--or);border:1px solid rgba(255,90,31,0.2)}
-.bj{background:rgba(0,212,255,0.08);color:var(--cx);border:1px solid rgba(0,212,255,0.15)}
-.bl{background:rgba(255,228,77,0.08);color:var(--yl);border:1px solid rgba(255,228,77,0.2)}
-.bl::before{content:'●';font-size:0.4rem;animation:pulse 1.5s infinite}
-
-.rc-title{font-family:var(--FD);font-size:1.35rem;color:var(--hd);line-height:1.2;margin-bottom:1.2rem;letter-spacing:0.02em}
-
-.rc-body{font-size:0.88rem;color:var(--mt);line-height:1.85;margin-bottom:1.5rem;font-weight:300}
-
-.rc-pipe{font-family:var(--FM);font-size:0.66rem;background:rgba(0,0,0,0.4);border:1px solid var(--b1);padding:0.9rem 1.2rem;line-height:2;margin-bottom:1.5rem;border-radius:1px}
-.pk{color:var(--cx)}.pa{color:var(--or)}.pok{color:var(--gr)}
-
-.tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.5rem}
-.tag{font-family:var(--FM);font-size:0.6rem;padding:0.18rem 0.55rem;border:1px solid var(--b2);color:var(--txt);border-radius:1px;transition:all 0.18s}
-.tag:hover,.tag.c{border-color:rgba(0,212,255,0.3);color:var(--cx);background:rgba(0,212,255,0.05)}
-.tag.g{border-color:rgba(0,255,136,0.3);color:var(--gr);background:rgba(0,255,136,0.04)}
-.tag.o{border-color:rgba(255,90,31,0.3);color:var(--or);background:rgba(255,90,31,0.04)}
-
-.rc-link{display:inline-flex;align-items:center;gap:0.4rem;font-family:var(--FM);font-size:0.65rem;color:var(--mt);text-decoration:none;border:1px solid var(--b2);padding:0.35rem 0.9rem;border-radius:1px;transition:all 0.2s}
-.rc-link:hover{color:var(--cx);border-color:var(--cx);background:rgba(0,212,255,0.05)}
-.rc-link svg{width:12px;height:12px;fill:currentColor}
-
-/* ═══ REPOS ═══ */
-#repos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--b1)}
-.repo{background:var(--bg);padding:1.4rem 1.6rem;text-decoration:none;display:block;transition:background 0.2s;position:relative;overflow:hidden}
-.repo::after{content:'↗';position:absolute;top:1rem;right:1rem;color:var(--mt);font-size:0.9rem;transition:color 0.2s}
-.repo:hover{background:var(--s1)}
-.repo:hover::after{color:var(--cx)}
-.rn{font-family:var(--FM);font-size:0.75rem;color:var(--cx);font-weight:700;margin-bottom:0.45rem;padding-right:1.5rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rd{font-size:0.78rem;color:var(--mt);line-height:1.5;margin-bottom:0.8rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.3rem;font-weight:300}
-.rm{display:flex;gap:0.8rem;align-items:center;flex-wrap:wrap}
-.rlg{display:flex;align-items:center;gap:0.3rem;font-family:var(--FM);font-size:0.6rem;color:var(--txt)}
-.ld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.rs{font-family:var(--FM);font-size:0.6rem;color:var(--mt)}
-.rtime{font-family:var(--FM);font-size:0.58rem;color:var(--mt);margin-left:auto}
-.repos-loading{text-align:center;padding:3rem;font-family:var(--FM);font-size:0.72rem;color:var(--mt)}
-.repos-loading .d{animation:blink 1.2s infinite;display:inline-block}
-.repos-loading .d:nth-child(2){animation-delay:0.3s}
-.repos-loading .d:nth-child(3){animation-delay:0.6s}
-
-/* ═══ SKILLS ═══ */
-.sg{display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:var(--b1)}
-.sk{background:var(--bg);padding:2rem 2.2rem;transition:background 0.2s}
-.sk:hover{background:var(--s1)}
-.sk-label{font-family:var(--FM);font-size:0.62rem;color:var(--or);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.2rem}
-.tgs{display:flex;flex-wrap:wrap;gap:0.4rem}
-.tg{font-size:0.78rem;font-weight:300;border:1px solid var(--b2);padding:0.22rem 0.65rem;border-radius:1px;color:var(--txt);transition:all 0.18s}
-.tg:hover{border-color:var(--cx);color:var(--cx);background:rgba(0,212,255,0.05)}
-
-/* ═══ ACHIEVEMENTS ═══ */
-.achg{display:grid;gap:1.5px;background:var(--b1)}
-.ach{background:var(--bg);padding:2rem 2.5rem;display:grid;grid-template-columns:90px 1fr;gap:2rem;align-items:center;transition:background 0.2s;position:relative;overflow:hidden}
-.ach::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(var(--cx),var(--gr));transform:scaleY(0);transform-origin:top;transition:transform 0.3s}
-.ach:hover{background:var(--s1)}
-.ach:hover::before{transform:scaleY(1)}
-.anum{font-family:var(--FD);font-size:3.5rem;color:var(--b2);line-height:1;text-align:center}
-.ach:hover .anum{color:var(--cx)}
-.atit{font-family:var(--FD);font-size:1.2rem;color:var(--hd);margin-bottom:0.3rem;letter-spacing:0.02em}
-.adesc{font-size:0.83rem;color:var(--mt);font-weight:300;line-height:1.7}
-
-/* ═══ QUOTE ═══ */
-.qsec{padding:6rem 0;background:var(--s1);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1)}
-.qinner{max-width:800px;margin:0 auto;padding:0 2.5rem;text-align:center}
-.qmark{font-family:var(--FD);font-size:6rem;color:var(--cx);line-height:0.5;opacity:0.3;margin-bottom:1rem}
-.qt{font-family:var(--FD);font-size:clamp(1.5rem,3vw,2.2rem);color:var(--hd);line-height:1.35;margin-bottom:1.2rem;font-weight:400}
-.qby{font-family:var(--FM);font-size:0.65rem;color:var(--cx);letter-spacing:0.2em}
-
-/* ═══ FOOTER ═══ */
-footer{padding:2.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1px solid var(--b1);background:var(--s1)}
-.fl{font-family:var(--FM);font-size:0.65rem;color:var(--mt)}
-.flinks{display:flex;gap:1.5rem}
-.flinks a{font-family:var(--FM);font-size:0.62rem;color:var(--mt);text-decoration:none;transition:color 0.2s}
-.flinks a:hover{color:var(--cx)}
-
-/* ═══ ANIMATIONS ═══ */
-@keyframes blink{0%,100%{opacity:0.15}50%{opacity:1}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-30px) scale(1.05)}66%{transform:translate(-20px,20px) scale(0.95)}}
-@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-@keyframes scrollDown{0%,100%{opacity:0;transform:translateY(-10px)}50%{opacity:1;transform:translateY(10px)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@keyframes countUp{from{opacity:0}to{opacity:1}}
-
-/* STAGGERED HERO ANIMATIONS */
-.h-chip{animation:fadeUp 0.7s 0.3s both}
-.name-block{animation:fadeUp 0.7s 0.45s both}
-.h-role{animation:fadeUp 0.7s 0.6s both}
-.h-desc{animation:fadeUp 0.7s 0.75s both}
-.stat-pills{animation:fadeUp 0.7s 0.9s both}
-.h-btns{animation:fadeUp 0.7s 1.05s both}
-
-/* REVEAL */
-.rv{opacity:1;transform:none;transition:opacity 0.6s ease,transform 0.6s ease}
-.rv.pre-anim{opacity:0;transform:translateY(20px)}
-.rv.in{opacity:1;transform:none}
-
-/* MOBILE */
-@media(max-width:900px){
-  .rg,.sg,#repos-grid{grid-template-columns:1fr}
-  .achg .ach{grid-template-columns:1fr}
-  .anum{display:none}
-  .nlinks a:not(:last-child){display:none}
-  .n1,.n2{font-size:4.5rem}
-}
-@media(max-width:500px){
-  #repos-grid{grid-template-columns:1fr}
-  .stat-pills{gap:0.6rem}
-}
-</style>
+    /* ─── INLINE SVG ICONS (encoded) ─── */
+    .icon-gh::before { content: '↗'; }
+  </style>
 </head>
 <body>
 
-<div id="prog"></div>
-<div id="c1"></div>
-<div id="c2"></div>
-
+<!-- ── NAV ── -->
 <nav>
-  <div class="nlogo"><span class="ncaret">_</span>tanmay_rawal</div>
-  <div class="nlinks">
-    <a href="#research">Research</a>
-    <a href="#repos">GitHub</a>
-    <a href="#skills">Stack</a>
-    <a href="#ach">Awards</a>
-    <a href="https://mail.google.com/mail/?view=cm&to=23DEC511@lnmiit.ac.in" target="_blank">Contact</a>
+  <div class="nav-inner">
+    <div class="nav-logo">Tanmay<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+    </ul>
   </div>
 </nav>
 
-<!-- ═══════════ HERO ═══════════ -->
-<section class="hero">
-  <div class="mesh">
-    <div class="mesh-blob mb1"></div>
-    <div class="mesh-blob mb2"></div>
-    <div class="mesh-blob mb3"></div>
-  </div>
-  <div class="grid-bg"></div>
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-bg"></div>
   <div class="hero-inner">
-    <div class="h-chip"><span class="pulse"></span>ECE Dual Degree · LNMIIT Jaipur · Rank 1 · 2023–2028</div>
-    <div class="name-block">
-      <span class="n1">TANMAY</span>
-      <span class="n2">RAWAL</span>
-    </div>
-    <div class="h-role">Edge AI × Agentic AI × Neuroimaging × FPGA Deployment</div>
-    <p class="h-desc">
-      Building AI that runs on <strong>real hardware</strong> and thinks with <strong>real tools</strong> —
-      CNN ensembles on 7,421 MRI scans to INT8 FPGA deployment via Vitis AI,
-      and RAG pipelines with LLM tool-use deployed as live MCP servers.
-      <strong>Rank 54/1,200+</strong> globally at Nokia FPGA Hackathon. <strong>2 papers</strong>.
-      One goal: AI that deploys — at the edge, in the clinic, in the agent loop.
-    </p>
-
-    <!-- ANIMATED STAT PILLS -->
-    <div class="stat-pills">
-      <div class="pill"><span class="pv" data-target="98.8">98.8</span><span class="pk">% Brain Tumor Accuracy</span></div>
-      <div class="pill"><span class="pv" style="color:var(--gr)" data-target="7.7">7.7</span><span class="pk">× FPGA Speedup</span></div>
-      <div class="pill"><span class="pv" style="color:var(--or)">54<sup style="font-size:0.6em">th</sup></span><span class="pk">Nokia FPGA Hackathon</span></div>
-      <div class="pill"><span class="pv" style="color:var(--yl)">0.3</span><span class="pk">% INT8 Accuracy Drop</span></div>
-      <div class="pill"><span class="pv" id="rpill" style="color:var(--txt)">6</span><span class="pk">Public Repos</span></div>
-    </div>
-
-    <div class="h-btns">
-      <a href="https://linkedin.com/in/tanmay-rawal-10b0a7278" target="_blank" class="btn btn-a"><span>LinkedIn ↗</span></a>
-      <a href="https://github.com/TanmayRawal" target="_blank" class="btn btn-b"><span>GitHub ↗</span></a>
-      <a href="https://mail.google.com/mail/?view=cm&to=23DEC511@lnmiit.ac.in" target="_blank" class="btn btn-b"><span>Email ↗</span></a>
-    </div>
-  </div>
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- TICKER -->
-<div class="ticker"><div class="track" id="tk"></div></div>
-
-<!-- ═══════════ RESEARCH ═══════════ -->
-<section class="sec" id="research">
-  <div class="w">
-    <div class="ey rv">research.publications</div>
-    <h2 class="rv">Published Work</h2>
-    <div class="rg">
-
-      <div class="rc pub rv">
-        <div class="rc-num">01</div>
-        <div class="rc-badge bp">Published</div>
-        <div class="rc-title">INSIGHT-BRAIN: Interpretable Neural Systems for Brain Tumor Imaging</div>
-        <p class="rc-body">Human-centered XAI framework — InceptionV3+Grad-CAM for spatial heatmaps, Xception+LIME for feature attribution, EfficientNetB0+SHAP for global contributions. Benchmarked against fidelity, stability, and cross-method consistency. Because a clinician's trust demands explanations that don't contradict each other.</p>
-        <div class="tags">
-          <span class="tag c">98.8% accuracy</span>
-          <span class="tag c">7,421 MRI scans</span>
-          <span class="tag g">IHCIC 2025</span>
-          <span class="tag">First Author · Paper #277</span>
-          <span class="tag">Human Centered AI Track</span>
-        </div>
-        <a href="https://github.com/TanmayRawal/Brain-Tumor-MRI-Classification-Using-Ensemble-CNN-XAI-and-Hardware-Accelerated-Edge-Deployment" target="_blank" class="rc-link">
-          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          View Repository ↗
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="dot"></span>
+        Open to Research Internships · May 2026
+      </div>
+      <h1 class="hero-name">
+        Tanmay
+        <span class="accent-line">Rawal.</span>
+      </h1>
+      <div class="hero-roles">
+        <span class="role-chip teal">Edge AI Researcher</span>
+        <span class="role-chip orange">FPGA Engineer</span>
+        <span class="role-chip">Agentic AI Builder</span>
+        <span class="role-chip">Published Author</span>
+      </div>
+      <p class="hero-desc">
+        <strong>B.Tech–M.Tech ECE</strong> student at LNMIIT Jaipur — Rank 1 in cohort.
+        I build AI systems that run at the <strong>hardware edge</strong>: deploying deep learning
+        on FPGAs, designing agentic pipelines, and publishing research at international venues.
+        My work bridges the gap between <strong>software ML depth</strong> and
+        <strong>FPGA hardware deployment</strong> — a rare combination in India.
+      </p>
+      <div class="hero-actions">
+        <a href="https://github.com/TanmayRawal" target="_blank" class="btn btn-primary">
+          <svg class="btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/tanmayrawal" target="_blank" class="btn btn-secondary">
+          <svg class="btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+          LinkedIn
+        </a>
+        <a href="#contact" class="btn btn-secondary">
+          Resume ↓
         </a>
       </div>
-
-      <div class="rc rev rv">
-        <div class="rc-num">02</div>
-        <div class="rc-badge br">Under Review</div>
-        <div class="rc-title">Hardware-Aware Quantization & FPGA Deployment for Explainable Tumor Detection</div>
-        <p class="rc-body">Extends INSIGHT-BRAIN to real hardware. FP32 to INT8 with less than 0.3% accuracy loss. No server, no cloud, no latency overhead. Runs at point of care.</p>
-        <div class="rc-pipe">
-          <span class="pk">Docker</span> <span class="pa">→</span>
-          <span class="pk">Vitis AI</span> <span class="pa">→</span>
-          <span class="pk">INT8 Quantization</span> <span class="pa">→</span>
-          <span class="pk">.xmodel</span> <span class="pa">→</span>
-          <span class="pk">PYNQ-ZU FPGA</span> <span class="pa">→</span>
-          <span class="pok">Real-time ✓</span>
+    </div>
+    <div class="hero-panel">
+      <div class="hero-stat-grid">
+        <div class="stat-cell">
+          <div class="stat-num"><span class="accent">#1</span></div>
+          <div class="stat-label">Cohort Rank</div>
         </div>
-        <div class="tags">
-          <span class="tag g">&lt;0.3% accuracy drop</span>
-          <span class="tag o">ISVLSI 2026</span>
-          <span class="tag o">IEEE CS · Paper #107</span>
-          <span class="tag">VLSI for Applied & Future Computing</span>
+        <div class="stat-cell">
+          <div class="stat-num">7.37</div>
+          <div class="stat-label">CGPA</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">2<span style="font-size:1rem;color:var(--text-muted)">×</span></div>
+          <div class="stat-label">Publications</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">13.9<span style="font-size:1rem;color:var(--text-muted)">×</span></div>
+          <div class="stat-label">CPU Speedup</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="aside-card-label">Current Info</div>
+        <div class="info-row">
+          <span class="info-icon">🏛</span>
+          <span><span class="info-val">LNMIIT Jaipur</span> · ECE Dual Degree</span>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">🎓</span>
+          <span>Batch <span class="info-val">'28</span> · 3rd Year</span>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">🔬</span>
+          <span>Under <span class="info-val">Dr. Kusum Lata</span> (HOD ECE, IISc PhD)</span>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">📍</span>
+          <span>Jaipur, Rajasthan</span>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">✅</span>
+          <span>Available from <span class="info-val">May 2026</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Background</div>
+      <h2 class="section-title">Software depth.<br>Hardware fluency.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal reveal-delay-1">
+        <p>
+          I'm a researcher and builder working at the intersection of <strong>AI, embedded systems, and
+          neuroimaging</strong>. What separates me from most ML students is that I don't just
+          train models — I deploy them on hardware. Real chips, real speedups, real systems.
+        </p>
+        <p>
+          My primary research focus is <strong>Edge AI for medical neuroimaging</strong> — building
+          CNN-based diagnostic systems that run on FPGA devices via Vitis AI, achieving hospital-grade
+          accuracy at millisecond inference speeds. This work has been published at
+          <strong>IHCIC 2025</strong> (First Author) and is currently under review at
+          <strong>ISVLSI 2026</strong>.
+        </p>
+        <p>
+          In parallel, I build full-stack <strong>Agentic AI systems</strong> — multi-agent RAG
+          pipelines, MCP servers, and LLM-powered applications — combining my hardware depth
+          with production-grade software engineering.
+        </p>
+        <p>
+          I work under the supervision of <strong>Dr. Kusum Lata</strong>, HOD of ECE at LNMIIT
+          and a PhD alumna of IISc Bangalore, one of India's premier research institutions.
+        </p>
+        <div class="about-tags">
+          <span class="tag">Edge AI</span>
+          <span class="tag">FPGA Deployment</span>
+          <span class="tag">Neuroimaging</span>
+          <span class="tag">Vitis AI</span>
+          <span class="tag">Agentic Systems</span>
+          <span class="tag">RAG Pipelines</span>
+          <span class="tag">Computer Vision</span>
+          <span class="tag">VHDL</span>
+          <span class="tag">Deep Learning</span>
+          <span class="tag">INT8 Quantization</span>
+        </div>
+      </div>
+      <div class="about-aside reveal reveal-delay-2">
+        <div class="aside-card">
+          <div class="aside-card-label">Academic Standing</div>
+          <div class="rank-display">
+            <div class="rank-num">#1</div>
+            <div>
+              <div class="rank-detail">Rank in Cohort</div>
+              <div class="rank-context">CGPA 7.37 · ECE Dual Degree<br>LNMIIT Jaipur · Batch 2028</div>
+            </div>
+          </div>
+        </div>
+        <div class="aside-card">
+          <div class="aside-card-label">Research Advisor</div>
+          <div class="advisor-row">
+            <div class="advisor-avatar">KL</div>
+            <div>
+              <div class="advisor-name">Dr. Kusum Lata</div>
+              <div class="advisor-role">HOD, ECE Department<br>LNMIIT Jaipur · PhD, IISc Bangalore</div>
+            </div>
+          </div>
+        </div>
+        <div class="aside-card">
+          <div class="aside-card-label">Research Focus</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="info-row" style="padding:4px 0;">
+              <span>🧠</span><span style="font-size:0.85rem;">Medical Neuroimaging AI</span>
+            </div>
+            <div class="info-row" style="padding:4px 0;">
+              <span>⚡</span><span style="font-size:0.85rem;">FPGA Hardware Acceleration</span>
+            </div>
+            <div class="info-row" style="padding:4px 0;">
+              <span>🤖</span><span style="font-size:0.85rem;">Agentic & RAG Systems</span>
+            </div>
+            <div class="info-row" style="padding:4px 0;border:none;">
+              <span>🔬</span><span style="font-size:0.85rem;">Edge AI Deployment</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESEARCH ── -->
+<section id="research">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Publications</div>
+      <h2 class="section-title">Research output</h2>
+      <p class="section-sub">Peer-reviewed work at international venues on edge-deployed AI for medical neuroimaging.</p>
+    </div>
+
+    <div class="pub-card reveal reveal-delay-1">
+      <div class="pub-year-badge">IHCIC 2025</div>
+      <div class="pub-body">
+        <div class="pub-status published"><span class="dot"></span>Published · First Author</div>
+        <div class="pub-title">INSIGHT-BRAIN: An Intelligent Ensemble-Based Multi-Class Brain Tumor Classification and Explainable AI System for Edge Deployment</div>
+        <div class="pub-meta">
+          International Conference on Intelligent Healthcare Computing and Innovation (IHCIC)
+          <span>·</span> 2025
+          <span>·</span> Tanmay Rawal et al.
+        </div>
+        <p class="pub-desc">
+          Developed a multi-class brain tumor MRI classification system using an ensemble of
+          EfficientNetB0, InceptionV3, and Xception with quantitative XAI (Grad-CAM, LIME, SHAP).
+          Deployed on PYNQ-ZU FPGA via Vitis AI with INT8 quantization achieving 98.8% accuracy
+          at production-grade inference throughput. First end-to-end neuroimaging AI-to-hardware
+          pipeline for clinical edge deployment.
+        </p>
+        <div class="pub-chips">
+          <span class="chip orange">First Author</span>
+          <span class="chip teal">98.8% Accuracy</span>
+          <span class="chip">EfficientNetB0 · InceptionV3 · Xception</span>
+          <span class="chip">Vitis AI · PYNQ-ZU</span>
+          <span class="chip">Grad-CAM · LIME · SHAP</span>
+          <span class="chip">INT8 Quantization</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pub-card reveal reveal-delay-2">
+      <div class="pub-year-badge">ISVLSI 2026</div>
+      <div class="pub-body">
+        <div class="pub-status review"><span class="dot"></span>Under Review</div>
+        <div class="pub-title">FPGA-Accelerated Alzheimer's Disease Detection via Quantized ResNet50 on PYNQ-ZU with Real-Time Edge Inference</div>
+        <div class="pub-meta">
+          IEEE International Symposium on VLSI (ISVLSI)
+          <span>·</span> 2026
+          <span>·</span> Tanmay Rawal et al.
+        </div>
+        <p class="pub-desc">
+          Full-pipeline Alzheimer's MRI classification using ResNet50 with Focal Loss training
+          and two-phase fine-tuning on merged OASIS+Falah dataset. Deployed on PYNQ-ZU via
+          Vitis AI achieving 96.42% accuracy, 98.4 FPS inference throughput, and 13.9× CPU
+          speedup. Includes live webcam detection on FPGA hardware.
+        </p>
+        <div class="pub-chips">
+          <span class="chip orange">Under Review</span>
+          <span class="chip teal">96.42% Accuracy</span>
+          <span class="chip teal">98.4 FPS</span>
+          <span class="chip teal">13.9× Speedup</span>
+          <span class="chip">ResNet50 · Focal Loss</span>
+          <span class="chip">OASIS + Falah Dataset</span>
+          <span class="chip">Vitis AI · DPU · PYNQ-ZU</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title">Projects built,<br>not just learned.</h2>
+      <p class="section-sub">End-to-end systems spanning medical AI, FPGA hardware, agentic pipelines, and digital design.</p>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Alzheimer's -->
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-badge orange">ISVLSI 2026</div>
+        <div class="project-header">
+          <div class="project-icon" style="background:#FFF1EB;">🧠</div>
+          <div class="project-links">
+            <a href="https://github.com/TanmayRawal" target="_blank" class="project-link" title="GitHub">↗</a>
+          </div>
+        </div>
+        <div class="project-name">Alzheimer's MRI — FPGA Edge Inference</div>
+        <p class="project-desc">
+          ResNet50 classifier (Focal Loss + two-phase fine-tuning) on OASIS+Falah MRI dataset.
+          Quantized to INT8 via Vitis AI and deployed on PYNQ-ZU with webcam live detection.
+        </p>
+        <div class="project-metrics">
+          <div class="metric"><div class="metric-dot green"></div>96.42% Acc</div>
+          <div class="metric"><div class="metric-dot blue"></div>98.4 FPS</div>
+          <div class="metric"><div class="metric-dot orange"></div>13.9× Speedup</div>
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">ResNet50</span>
+          <span class="stack-tag">Vitis AI</span>
+          <span class="stack-tag">PYNQ-ZU</span>
+          <span class="stack-tag">ONNX</span>
+          <span class="stack-tag">INT8</span>
+          <span class="stack-tag">OpenCV</span>
+          <span class="stack-tag">TensorFlow</span>
         </div>
       </div>
 
-      <!-- CARD 03 - FULL WIDTH -->
-      <div class="rc prj rv" style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start">
+      <!-- Brain Tumor -->
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-badge" style="background:rgba(15,118,110,0.1);color:var(--teal);">IHCIC 2025</div>
+        <div class="project-header">
+          <div class="project-icon" style="background:#E6F7F5;">🔬</div>
+          <div class="project-links">
+            <a href="https://github.com/TanmayRawal" target="_blank" class="project-link">↗</a>
+          </div>
+        </div>
+        <div class="project-name">Brain Tumor Ensemble — XAI + Edge AI</div>
+        <p class="project-desc">
+          Multi-class MRI classification with EfficientNetB0, InceptionV3 & Xception ensemble.
+          Quantitative explainability via Grad-CAM, LIME, SHAP. Full FPGA deployment pipeline.
+        </p>
+        <div class="project-metrics">
+          <div class="metric"><div class="metric-dot green"></div>98.8% Acc</div>
+          <div class="metric"><div class="metric-dot blue"></div>INT8 Quant</div>
+          <div class="metric"><div class="metric-dot orange"></div>XAI: 3 methods</div>
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">EfficientNetB0</span>
+          <span class="stack-tag">InceptionV3</span>
+          <span class="stack-tag">Xception</span>
+          <span class="stack-tag">Grad-CAM</span>
+          <span class="stack-tag">LIME</span>
+          <span class="stack-tag">SHAP</span>
+          <span class="stack-tag">PYNQ-ZU</span>
+        </div>
+      </div>
+
+      <!-- ResolveAI -->
+      <div class="project-card reveal reveal-delay-3">
+        <div class="project-header">
+          <div class="project-icon" style="background:#EEF2FF;">🤖</div>
+          <div class="project-links">
+            <a href="https://github.com/TanmayRawal/ResolveAI" target="_blank" class="project-link">↗</a>
+          </div>
+        </div>
+        <div class="project-name">ResolveAI — Production Agentic RAG</div>
+        <p class="project-desc">
+          Production-grade 4-agent RAG pipeline for e-commerce customer support.
+          Agents handle routing, retrieval, answer synthesis, and escalation — all orchestrated
+          with CrewAI over a FAISS vector store.
+        </p>
+        <div class="project-metrics">
+          <div class="metric"><div class="metric-dot blue"></div>4-Agent System</div>
+          <div class="metric"><div class="metric-dot green"></div>Production-grade</div>
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">CrewAI</span>
+          <span class="stack-tag">Gemini</span>
+          <span class="stack-tag">FAISS</span>
+          <span class="stack-tag">Streamlit</span>
+          <span class="stack-tag">LangChain</span>
+          <span class="stack-tag">RAG</span>
+        </div>
+      </div>
+
+      <!-- RAG MCP Server -->
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-badge blue">Live Deploy</div>
+        <div class="project-header">
+          <div class="project-icon" style="background:#F0FDF4;">⚡</div>
+          <div class="project-links">
+            <a href="https://github.com/TanmayRawal/rag-mcp-server" target="_blank" class="project-link">↗</a>
+          </div>
+        </div>
+        <div class="project-name">RAG-MCP Server — LLM Agentic Backend</div>
+        <p class="project-desc">
+          MCP server enabling LLM agents to query a FAISS knowledge base via FastMCP protocol.
+          Built and deployed to Streamlit Cloud in a single day as part of an internship push.
+        </p>
+        <div class="project-metrics">
+          <div class="metric"><div class="metric-dot green"></div>Live on Cloud</div>
+          <div class="metric"><div class="metric-dot blue"></div>MCP Protocol</div>
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">FastMCP</span>
+          <span class="stack-tag">Groq LLaMA 3.3-70B</span>
+          <span class="stack-tag">FAISS</span>
+          <span class="stack-tag">Streamlit Cloud</span>
+          <span class="stack-tag">REST API</span>
+        </div>
+      </div>
+
+      <!-- AES-128 -->
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-header">
+          <div class="project-icon" style="background:#FFF7ED;">🔐</div>
+          <div class="project-links">
+            <a href="https://github.com/TanmayRawal" target="_blank" class="project-link">↗</a>
+          </div>
+        </div>
+        <div class="project-name">AES-128 Encryption — VHDL on FPGA</div>
+        <p class="project-desc">
+          Full AES-128 encryption engine implemented in VHDL and deployed on Nexys 4 DDR FPGA.
+          Includes complete correctness audit with known-answer tests and timing analysis.
+        </p>
+        <div class="project-metrics">
+          <div class="metric"><div class="metric-dot orange"></div>Full AES-128</div>
+          <div class="metric"><div class="metric-dot blue"></div>Nexys 4 DDR</div>
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">VHDL</span>
+          <span class="stack-tag">Vivado</span>
+          <span class="stack-tag">Nexys 4 DDR</span>
+          <span class="stack-tag">Cryptography</span>
+          <span class="stack-tag">Digital Design</span>
+        </div>
+      </div>
+
+      <!-- 8-bit ALU -->
+      <div class="project-card reveal reveal-delay-3">
+        <div class="project-header">
+          <div class="project-icon" style="background:#F0F9FF;">⚙️</div>
+          <div class="project-links">
+            <a href="https://github.com/TanmayRawal" target="_blank" class="project-link">↗</a>
+          </div>
+        </div>
+        <div class="project-name">8-Bit ALU — VHDL Digital System Design</div>
+        <p class="project-desc">
+          Complete 8-bit ALU designed in VHDL with all arithmetic and logic operations.
+          Synthesized and verified on Nexys 4 DDR with full Vivado simulation and waveform analysis.
+        </p>
+        <div class="project-metrics">
+          <div class="metric"><div class="metric-dot green"></div>8-bit Full ALU</div>
+          <div class="metric"><div class="metric-dot blue"></div>Verified on Board</div>
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">VHDL</span>
+          <span class="stack-tag">Vivado</span>
+          <span class="stack-tag">Nexys 4 DDR</span>
+          <span class="stack-tag">RTL Design</span>
+          <span class="stack-tag">Simulation</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Technical Stack</div>
+      <h2 class="section-title">Tools & expertise</h2>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-category reveal reveal-delay-1">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon" style="background:#FFF1EB;">🧠</div>
+          <div class="skill-cat-name">Deep Learning & ML</div>
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <span class="skill-name">PyTorch / TensorFlow</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:92%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">CNN Architectures</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:90%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Transfer Learning</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Model Optimization</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-category reveal reveal-delay-2">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon" style="background:#E6F7F5;">⚡</div>
+          <div class="skill-cat-name">FPGA & Edge Deployment</div>
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <span class="skill-name">Vitis AI / DPU</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">ONNX / INT8 Quant</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">VHDL / RTL Design</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:82%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Vivado / PYNQ-ZU</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:80%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-category reveal reveal-delay-3">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon" style="background:#EEF2FF;">🤖</div>
+          <div class="skill-cat-name">Agentic AI & LLMs</div>
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <span class="skill-name">LangChain / LangGraph</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">CrewAI / Multi-Agent</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:82%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">RAG / FAISS</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Groq / Gemini APIs</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:80%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-category reveal reveal-delay-1">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon" style="background:#F0F9FF;">🔧</div>
+          <div class="skill-cat-name">Engineering Stack</div>
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <span class="skill-name">Python / NumPy / Pandas</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:95%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Docker / Linux / Git</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:85%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">OpenCV / PIL</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:88%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">REST APIs / FastAPI</span>
+            <div class="skill-bar"><div class="skill-fill" style="--w:78%"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="contact-label">Let's Connect</div>
+      <h2 class="contact-title">
+        Building something<br>at the <span class="accent">edge?</span>
+      </h2>
+      <p class="contact-body">
+        I'm actively looking for research internships and collaborations in Edge AI,
+        FPGA acceleration, or Agentic AI systems — starting May 2026.
+        If you're working on something exciting, let's talk.
+      </p>
+      <a href="mailto:tanmayrawal@lnmiit.ac.in" class="btn btn-primary" style="background:var(--accent);color:white;border-radius:100px;">
+        Say Hello →
+      </a>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:tanmayrawal@lnmiit.ac.in" class="contact-link">
+        <span class="contact-link-icon">✉</span>
         <div>
-          <div class="rc-num" style="position:static;font-size:3rem;color:var(--b2);margin-bottom:0.5rem">03</div>
-          <div class="rc-badge bj">Project</div>
-          <div class="rc-title">Alzheimer's MRI Classification — Hardware-Accelerated CNN on PYNQ-ZU</div>
-          <p class="rc-body">ResNet50 for 4-class Alzheimer's staging on Zynq UltraScale+ via Vitis AI. The origin of the combined diagnostic vision — all four clinical efficiency metrics validated simultaneously.</p>
-          <a href="https://github.com/TanmayRawal/Alzheimer-Classification-Using-Hardware-Accelerated-CNN-on-PYNQ-ZU-FPGA-with-Arm-Processor" target="_blank" class="rc-link">
-            <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            View Repository ↗
-          </a>
+          <div>tanmayrawal@lnmiit.ac.in</div>
+          <div class="contact-link-label">Email</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;align-content:start;padding-top:0.5rem">
-          <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);padding:1rem;border-radius:1px;text-align:center">
-            <div style="font-family:var(--FD);font-size:1.8rem;color:var(--cx);line-height:1">325ms<br><span style="font-size:1rem;color:var(--or)">↓</span><br>42ms</div>
-            <div style="font-family:var(--FM);font-size:0.58rem;color:var(--mt);margin-top:0.4rem;letter-spacing:0.08em">INFERENCE</div>
-          </div>
-          <div style="background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.15);padding:1rem;border-radius:1px;text-align:center">
-            <div style="font-family:var(--FD);font-size:1.8rem;color:var(--gr);line-height:1">7.7×</div>
-            <div style="font-family:var(--FM);font-size:0.58rem;color:var(--mt);margin-top:0.4rem;letter-spacing:0.08em">SPEEDUP</div>
-          </div>
-          <div style="background:rgba(255,90,31,0.05);border:1px solid rgba(255,90,31,0.15);padding:1rem;border-radius:1px;text-align:center">
-            <div style="font-family:var(--FD);font-size:1.8rem;color:var(--or);line-height:1">75%</div>
-            <div style="font-family:var(--FM);font-size:0.58rem;color:var(--mt);margin-top:0.4rem;letter-spacing:0.08em">COMPRESSION</div>
-          </div>
-          <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);padding:1rem;border-radius:1px;text-align:center">
-            <div style="font-family:var(--FD);font-size:1.8rem;color:var(--cx);line-height:1">91.14%</div>
-            <div style="font-family:var(--FM);font-size:0.58rem;color:var(--mt);margin-top:0.4rem;letter-spacing:0.08em">ACCURACY</div>
-          </div>
+      </a>
+      <a href="https://github.com/TanmayRawal" target="_blank" class="contact-link">
+        <span class="contact-link-icon">⌥</span>
+        <div>
+          <div>github.com/TanmayRawal</div>
+          <div class="contact-link-label">GitHub · Projects & Code</div>
         </div>
-      </div>
-
-      <!-- CARD 04 AGENT - FULL WIDTH -->
-      <div class="rc liv rv" style="grid-column:1/-1;background:var(--s1);border-left:2px solid var(--yl);position:relative;overflow:hidden">
-        <div style="position:absolute;top:0;right:0;font-family:var(--FD);font-size:14rem;color:rgba(255,228,77,0.03);line-height:1;pointer-events:none;user-select:none;letter-spacing:-0.05em">AGENT</div>
-        <div style="display:grid;grid-template-columns:1fr 340px;gap:3rem;align-items:start">
-          <div>
-            <div class="rc-badge bl" style="margin-bottom:0.8rem">⚡ Agentic AI · Live</div>
-            <div class="rc-title" style="font-size:1.5rem">RAG Knowledge Assistant + MCP Integration — End-to-End Agentic LLM Tool-Use</div>
-            <p class="rc-body" style="font-size:0.9rem">Full agentic pipeline from raw PDFs to Claude Desktop calling the knowledge base as a live tool — end-to-end LLM tool-use, semantic retrieval, grounded answer generation, per-chunk source attribution. Architecture pattern for production agentic AI systems.</p>
-            <div class="rc-pipe">
-              <span class="pk">PyMuPDF</span> <span class="pa">→</span>
-              <span class="pk">Sentence Transformers</span> <span class="pa">→</span>
-              <span class="pk">FAISS</span> <span class="pa">→</span>
-              <span class="pk">Groq LLaMA 3.3 70B</span> <span class="pa">→</span>
-              <span class="pk">FastMCP</span> <span class="pa">→</span>
-              <span class="pok">Claude Desktop ✓</span>
-            </div>
-            <a href="https://github.com/TanmayRawal/rag-mcp-server" target="_blank" class="rc-link">
-              <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              rag-mcp-server ↗
-            </a>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:0.6rem;padding-top:0.3rem">
-            <div style="font-family:var(--FM);font-size:0.6rem;color:var(--yl);letter-spacing:0.15em;margin-bottom:0.4rem">// STACK</div>
-            <div class="tags" style="flex-direction:column;margin-bottom:0">
-              <span class="tag g" style="width:fit-content">Streamlit Cloud · live</span>
-              <span class="tag c" style="width:fit-content">MCP Tool-Use</span>
-              <span class="tag c" style="width:fit-content">Semantic RAG</span>
-              <span class="tag c" style="width:fit-content">LLM Grounding</span>
-              <span class="tag" style="width:fit-content">Groq LLaMA 3.3 70B</span>
-              <span class="tag" style="width:fit-content">FAISS Vector Store</span>
-              <span class="tag" style="width:fit-content">FastMCP</span>
-              <span class="tag" style="width:fit-content">Per-chunk attribution</span>
-              <span class="tag" style="width:fit-content;color:var(--yl);border-color:rgba(255,228,77,0.2)">Built in 1 day</span>
-            </div>
-          </div>
+      </a>
+      <a href="https://linkedin.com/in/tanmayrawal" target="_blank" class="contact-link">
+        <span class="contact-link-icon">in</span>
+        <div>
+          <div>linkedin.com/in/tanmayrawal</div>
+          <div class="contact-link-label">LinkedIn · Professional</div>
         </div>
-      </div>
-
+      </a>
+      <a href="https://tanmayrawal.github.io" class="contact-link">
+        <span class="contact-link-icon">🌐</span>
+        <div>
+          <div>tanmayrawal.github.io</div>
+          <div class="contact-link-label">Portfolio · This page</div>
+        </div>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ REPOS ═══════════ -->
-<section class="sec" id="repos" style="padding-top:0">
-  <div class="w">
-    <div class="ey rv">github.api — live</div>
-    <h2 class="rv">Repositories</h2>
-    <div id="repos-wrap"><div class="repos-loading">Fetching<span class="d">.</span><span class="d">.</span><span class="d">.</span></div></div>
-  </div>
-</section>
-
-<!-- ═══════════ SKILLS ═══════════ -->
-<section class="sec" id="skills" style="padding-top:0">
-  <div class="w">
-    <div class="ey rv">technical.stack</div>
-    <h2 class="rv">Skills</h2>
-    <div class="sg">
-      <div class="sk rv">
-        <div class="sk-label">ML & AI</div>
-        <div class="tgs"><span class="tg">Deep Learning</span><span class="tg">Transfer Learning</span><span class="tg">Computer Vision</span><span class="tg">Explainable AI</span><span class="tg">XAI Benchmarking</span><span class="tg">RAG</span><span class="tg">Model Quantization</span><span class="tg">MLOps</span></div>
-      </div>
-      <div class="sk rv">
-        <div class="sk-label">Edge AI & Hardware</div>
-        <div class="tgs"><span class="tg">Vitis AI</span><span class="tg">FPGA Deployment</span><span class="tg">PYNQ-ZU</span><span class="tg">Zynq UltraScale+</span><span class="tg">VHDL</span><span class="tg">Xilinx Vivado</span><span class="tg">INT8 Quantization</span><span class="tg">ONNX</span><span class="tg">Nexys 4 DDR</span></div>
-      </div>
-      <div class="sk rv">
-        <div class="sk-label">Frameworks & Tools</div>
-        <div class="tgs"><span class="tg">PyTorch</span><span class="tg">TensorFlow</span><span class="tg">OpenCV</span><span class="tg">CUDA</span><span class="tg">scikit-learn</span><span class="tg">NumPy</span><span class="tg">Pandas</span><span class="tg">Streamlit</span><span class="tg">Docker</span><span class="tg">Git</span><span class="tg">Linux</span></div>
-      </div>
-      <div class="sk rv">
-        <div class="sk-label">Agentic AI & LLM Systems</div>
-        <div class="tgs"><span class="tg">MCP Tool-Use</span><span class="tg">RAG Pipelines</span><span class="tg">LLM Grounding</span><span class="tg">FastMCP</span><span class="tg">Groq</span><span class="tg">LLaMA 3.3 70B</span><span class="tg">HuggingFace Transformers</span><span class="tg">Sentence Transformers</span><span class="tg">FAISS</span><span class="tg">PyMuPDF</span><span class="tg">Streamlit</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ ACHIEVEMENTS ═══════════ -->
-<section class="sec" id="ach" style="padding-top:0">
-  <div class="w">
-    <div class="ey rv">achievements.log</div>
-    <h2 class="rv">Recognition</h2>
-    <div class="achg">
-      <div class="ach rv"><div class="anum">01</div><div><div class="atit">Nokia FPGA Hackathon — Global Rank 54 / 1,200+ Teams</div><div class="adesc">Top 100 finalist worldwide in FPGA-accelerated AI system design. Competed against graduate and professional engineering teams globally.</div></div></div>
-      <div class="ach rv"><div class="anum">02</div><div><div class="atit">First Author · IHCIC 2025 — Published</div><div class="adesc">INSIGHT-BRAIN at the 17th International Conference on Intelligent Human-Computer Interaction · Track 5: Human Centered AI · Paper ID 277</div></div></div>
-      <div class="ach rv"><div class="anum">03</div><div><div class="atit">Co-Author · ISVLSI 2026 — Under Review</div><div class="adesc">Hardware-aware quantization and FPGA deployment at IEEE Computer Society Annual Symposium on VLSI 2026 · VLSI for Applied and Future Computing · Paper No. 107</div></div></div>
-      <div class="ach rv"><div class="anum">04</div><div><div class="atit">Rank 1 — Dual Degree Cohort · LNMIIT Jaipur</div><div class="adesc">Top of cohort in B.Tech-M.Tech Integrated Dual Degree, ECE. Research supervised by Dr. Kusum Lata (PhD, IISc Bangalore), HOD ECE, LNMIIT.</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- QUOTE -->
-<div class="qsec">
-  <div class="qinner">
-    <div class="qmark rv">"</div>
-    <div class="qt rv">The gap between training an accurate model and deploying one a clinician would trust — that's where the real research lives.</div>
-    <div class="qby rv">— Tanmay Rawal</div>
-  </div>
-</div>
-
+<!-- ── FOOTER ── -->
 <footer>
-  <div class="fl">Tanmay Rawal · LNMIIT Jaipur · ECE Dual Degree · 2023–2028</div>
-  <div class="flinks">
-    <a href="https://linkedin.com/in/tanmay-rawal-10b0a7278" target="_blank">LinkedIn</a>
-    <a href="https://github.com/TanmayRawal" target="_blank">GitHub</a>
-    <a href="https://mail.google.com/mail/?view=cm&to=23DEC511@lnmiit.ac.in" target="_blank"><span class="__cf_email__" data-cfemail="9eacaddadbddabafafdef2f0f3f7f7eab0fffdb0f7f0">[email&#160;protected]</span></a>
-    <a href="tel:8287523527">+91 82875 23527</a>
-  </div>
+  <span>Tanmay Rawal</span> · LNMIIT Jaipur · ECE Dual Degree '28 · Built with care, no templates.
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* CURSOR */
-const c1=document.getElementById('c1'),c2=document.getElementById('c2');
-document.addEventListener('mousemove',e=>{
-  const x=e.clientX,y=e.clientY;
-  c1.style.left=x+'px';c1.style.top=y+'px';
-  c2.style.left=x+'px';c2.style.top=y+'px';
-});
-document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{c2.style.transform='scale(2.2)';c2.style.background='rgba(0,212,255,0.05)'});
-  el.addEventListener('mouseleave',()=>{c2.style.transform='scale(1)';c2.style.background='transparent'});
-});
+<!-- ── SCRIPTS ── -->
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
 
-/* PROGRESS */
-window.addEventListener('scroll',()=>{
-  const s=document.documentElement.scrollTop;
-  const h=document.documentElement.scrollHeight-window.innerHeight;
-  document.getElementById('prog').style.width=(s/h*100)+'%';
-});
+  // Skill bar animation
+  const skills = document.querySelectorAll('.skill-fill');
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('animated'), 200);
+        skillObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  skills.forEach(el => skillObserver.observe(el));
 
-/* TICKER */
-const td=[
-  ['brain_tumor.accuracy','98.8%'],['fpga.speedup','7.7×'],['int8.accuracy_drop','<0.3%'],
-  ['model.compression','75%'],['power.reduction','32%'],['hackathon.rank','54/1,200+'],
-  ['mri_dataset','7,421 scans'],['papers.published','1'],['papers.review','1'],['cohort.rank','#1'],
-  ['rag.built_in','1 day'],['mcp.tools_called','live'],['llm.backend','LLaMA 3.3 70B'],['vector.store','FAISS'],
-];
-const tk=document.getElementById('tk');
-[...td,...td].forEach(([k,v])=>{
-  const d=document.createElement('div');d.className='ti';
-  d.innerHTML=`${k}<span class="val">${v}</span><span class="sep">//</span>`;
-  tk.appendChild(d);
-});
-
-/* SCROLL REVEAL */
-const obs=new IntersectionObserver(es=>{
-  es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);obs.unobserve(e.target)}});
-},{threshold:0.08});
-// Only add animation if JS runs - content visible by default
-document.querySelectorAll('.rv').forEach(el=>{
-  el.classList.add('pre-anim');
-  obs.observe(el);
-});
-
-/* ANIMATED COUNTERS */
-function countUp(el,target,duration=1500,suffix=''){
-  const start=performance.now();
-  const update=t=>{
-    const p=Math.min((t-start)/duration,1);
-    const v=p*target;
-    el.textContent=(target%1===0?Math.floor(v):v.toFixed(1))+suffix;
-    if(p<1)requestAnimationFrame(update);
-  };
-  requestAnimationFrame(update);
-}
-const pillObs=new IntersectionObserver(es=>{
-  es.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.querySelectorAll('[data-target]').forEach(el=>{
-        countUp(el,parseFloat(el.dataset.target));
-      });
-      pillObs.unobserve(e.target);
-    }
+  // Nav active link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--text)' : '';
+    });
   });
-},{threshold:0.3});
-document.querySelector('.stat-pills')&&pillObs.observe(document.querySelector('.stat-pills'));
-
-
-/* GITHUB */
-const LC={'Python':'#3572A5','Jupyter Notebook':'#DA5B0B','HTML':'#e34c26','VHDL':'#adb2c3','C':'#555','C++':'#f34b7d','JavaScript':'#f1e05a','Shell':'#89e051'};
-const lc=l=>LC[l]||'#3a5568';
-const ago=d=>{const days=Math.floor((Date.now()-new Date(d))/86400000);if(days<1)return'today';if(days===1)return'1d ago';if(days<30)return days+'d ago';if(days<365)return Math.floor(days/30)+'mo ago';return Math.floor(days/365)+'y ago'};
-
-const fallbackRepos=[
-  {name:'Brain-Tumor-MRI-Classification',html_url:'https://github.com/TanmayRawal/Brain-Tumor-MRI-Classification-Using-Ensemble-CNN-XAI-and-Hardware-Accelerated-Edge-Deployment',description:'CNN ensemble + XAI + FPGA edge deployment for brain tumor MRI. Published at IHCIC 2025.',language:'Jupyter Notebook',stargazers_count:1,updated_at:new Date(Date.now()-12*86400000).toISOString()},
-  {name:'Alzheimer-Classification-FPGA',html_url:'https://github.com/TanmayRawal/Alzheimer-Classification-Using-Hardware-Accelerated-CNN-on-PYNQ-ZU-FPGA-with-Arm-Processor',description:'ResNet50 Alzheimer staging on PYNQ-ZU FPGA via Vitis AI. 7.7x speedup, 75% compression.',language:'Jupyter Notebook',stargazers_count:1,updated_at:new Date(Date.now()-19*86400000).toISOString()},
-  {name:'rag-mcp-server',html_url:'https://github.com/TanmayRawal/rag-mcp-server',description:'RAG pipeline as MCP server — Claude Desktop calls it as a live agentic tool.',language:'Jupyter Notebook',stargazers_count:1,updated_at:new Date(Date.now()-5*86400000).toISOString()},
-  {name:'house-price-prediction',html_url:'https://github.com/TanmayRawal/house-price-prediction',description:'Linear + Logistic Regression for house price prediction. R2=0.649, 81.6% accuracy.',language:'Jupyter Notebook',stargazers_count:0,updated_at:new Date(Date.now()-5*86400000).toISOString()},
-  {name:'tanmayrawal.github.io',html_url:'https://github.com/TanmayRawal/tanmayrawal.github.io',description:'Personal portfolio — Edge AI x Agentic AI x Neuroimaging.',language:'HTML',stargazers_count:0,updated_at:new Date(Date.now()-86400000).toISOString()},
-  {name:'TanmayRawal',html_url:'https://github.com/TanmayRawal/TanmayRawal',description:'GitHub profile README.',language:null,stargazers_count:0,updated_at:new Date().toISOString()},
-];
-
-function renderRepos(repos){
-  const wrap=document.getElementById('repos-wrap');
-  if(!wrap)return;
-  const g=document.createElement('div');
-  g.id='repos-grid';
-  repos.forEach(repo=>{
-    const a=document.createElement('a');
-    a.href=repo.html_url;a.target='_blank';a.rel='noopener noreferrer';a.className='repo';
-    a.innerHTML='<div class="rn">'+repo.name+'</div><div class="rd">'+(repo.description||'No description.')+'</div><div class="rm">'+(repo.language?'<div class="rlg"><span class="ld" style="background:'+lc(repo.language)+'"></span>'+repo.language+'</div>':'')+(repo.stargazers_count>0?'<div class="rs">★ '+repo.stargazers_count+'</div>':'')+'<div class="rtime">'+ago(repo.updated_at)+'</div></div>';
-    g.appendChild(a);
-  });
-  wrap.innerHTML='';wrap.appendChild(g);
-}
-
-renderRepos(fallbackRepos);
-
-(async()=>{
-  try{
-    const r=await fetch('https://api.github.com/users/TanmayRawal/repos?sort=updated&per_page=100');
-    if(!r.ok)throw new Error('API error');
-    const repos=await r.json();
-    const pub=repos.filter(r=>!r.fork);
-    if(pub.length>0){
-      const rp=document.getElementById('rpill');
-      if(rp)rp.textContent=pub.length;
-      renderRepos(pub);
-    }
-  }catch(e){
-    console.log('Using fallback repos - API unavailable');
-  }
-})();
 </script>
+
 </body>
 </html>

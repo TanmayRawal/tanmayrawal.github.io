@@ -243,6 +243,69 @@ footer span{color:rgba(255,255,255,.48)}
 .btn-signal{background:var(--signal);color:#fff}
 .btn-signal:hover{background:#a82d06;transform:translateY(-2px);box-shadow:0 6px 24px rgba(201,59,10,.38)}
 
+
+/* ── HERO 2-COL ── */
+.hero-inner{display:grid;grid-template-columns:1fr 480px;gap:60px;align-items:center}
+.hero-left{}
+.hero-right{opacity:0;animation:up .9s .6s ease forwards}
+
+/* ── TERMINAL ── */
+.terminal{
+  background:#0D1117;
+  border:1px solid #30363D;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.04);
+  font-family:var(--ff-mono);
+  font-size:.78rem;
+  position:relative;
+}
+.terminal::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,59,10,.04) 0%,transparent 60%);
+  pointer-events:none;z-index:0;
+}
+.term-bar{
+  background:#161B22;
+  border-bottom:1px solid #30363D;
+  padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+  position:relative;z-index:1;
+}
+.term-dots{display:flex;gap:6px}
+.term-dot{width:12px;height:12px;border-radius:50%}
+.term-dot.r{background:#FF5F57}
+.term-dot.y{background:#FFBD2E}
+.term-dot.g{background:#28C840}
+.term-title{
+  flex:1;text-align:center;
+  font-size:.68rem;letter-spacing:.06em;
+  color:#6E7681;
+}
+.term-body{
+  padding:20px 22px;
+  line-height:1.85;
+  position:relative;z-index:1;
+  min-height:340px;
+}
+.term-line{display:flex;gap:0;margin:0;white-space:pre-wrap;word-break:break-all}
+.term-prompt{color:#C93B0A;flex-shrink:0;margin-right:8px}
+.term-cmd{color:#E6EDF3}
+.term-out{color:#8B949E;margin-left:0}
+.term-out.green{color:#3FB950}
+.term-out.blue{color:#58A6FF}
+.term-out.orange{color:#FF6B35}
+.term-out.yellow{color:#E3B341}
+.term-out.teal{color:#39D353}
+.term-cursor-line{display:flex;align-items:center;gap:0}
+.term-blink{display:inline-block;width:8px;height:1em;background:#C93B0A;animation:blink .8s step-end infinite;vertical-align:text-bottom;margin-left:2px}
+
+@media(max-width:1000px){
+  .hero-inner{grid-template-columns:1fr;gap:40px}
+  .hero-right{display:none}
+}
+
 /* ── ANIMATIONS ── */
 @keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 
